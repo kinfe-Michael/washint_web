@@ -1,33 +1,30 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import Header from "./components/header";
+import Sidebar from "./components/sidebar";
+import "./globals.css"; // Your global styles including Tailwind imports
+import BottomContainer from "./components/BottomContainer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "Washint",
-  description: "music streaming platform",
+export const metadata = {
+  title: "Next.js Fixed Layout",
+  description:
+    "Layout with fixed header, sidebar, scrolling content, and fixed footer",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className="flex flex-col min-h-screen bg-gray-100">
+        <Header />
+
+        <div className="flex flex-1 mt-16 pb-16">
+          <Sidebar />
+          <main className="flex-1 lg:ml-64 bg-gray-900 p-4 overflow-y-auto">{children}</main>
+        </div>
+
+        <BottomContainer/>
       </body>
     </html>
   );
