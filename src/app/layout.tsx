@@ -19,12 +19,8 @@ export default function RootLayout({
       <body className="flex flex-col min-h-screen bg-gray-100">
         <Header />
 
-        <div className="flex flex-1 mt-16 pb-16">
-          <Sidebar />
-          <main className="flex-1 lg:ml-64 bg-gray-900 p-4 overflow-y-auto">{children}</main>
-        </div>
+          <main className="flex-1  bg-gray-900 p-4 overflow-y-auto">{children}</main>
 
-        <BottomContainer/>
       </body>
     </html>
   );
