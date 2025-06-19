@@ -16,9 +16,8 @@ function Header() {
         </div>
       </div>
       <div className="flex flex-grow justify-end  gap-2">
-      <Button className=" font-bold">Login</Button>
-      <Button className="bg-[#FF3B30] hover:bg-[#ff3a30d8] font-bold">Sign up</Button>
-
+      <Button className="pt-1 px-2 text-xs font-bold">Login</Button>
+      <Button className="bg-[#FF3B30] text-xs  pt-1 px-2 hover:bg-[#ff3a30d8] font-bold">Sign up</Button>
       </div>
     </header>
   );
