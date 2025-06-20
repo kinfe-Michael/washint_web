@@ -22,7 +22,7 @@ export default function RootLayout({
         <div className=" mx-auto flex-grow w-full">
           <div className="flex flex-col flex-1">
             <Header />
-            <ScrollArea className="flex-1 p-4">
+            <ScrollArea className="flex-1">
               {children}
               <ScrollBar orientation="vertical" />
             </ScrollArea>

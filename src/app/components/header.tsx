@@ -1,8 +1,9 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
-import { HiSparkles } from "react-icons/hi";
+import { HiSparkles, HiViewList } from "react-icons/hi";
 import { HiMagnifyingGlass } from "react-icons/hi2";
+import PhoneSidebar from "./PhoneSidebar";
 function Header() {
   return (
     <header className="fixed flex  top-0 h-16 left-0 right-0 z-50 bg-black text-white items-center px-4 shadow-md">
@@ -15,9 +16,10 @@ function Header() {
           <input className="focus:outline-0  " type="text" />
         </div>
       </div>
-      <div className="flex flex-grow justify-end  gap-2">
-      <Button className="pt-1 px-2 text-xs font-bold">Login</Button>
-      <Button className="bg-[#FF3B30] text-xs  pt-1 px-2 hover:bg-[#ff3a30d8] font-bold">Sign up</Button>
+      <div className="flex flex-grow items-center justify-end  gap-2">
+      <Button className=" px-2 text-xs hidden md:block font-bold">Login</Button>
+      <Button className="bg-[#FF3B30] text-xs  px-1 hover:bg-[#ff3a30d8] font-bold">Sign up</Button>
+      <PhoneSidebar/>
       </div>
     </header>
   );

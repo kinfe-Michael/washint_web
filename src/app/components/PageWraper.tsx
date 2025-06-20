@@ -7,7 +7,7 @@ function PageWraper(props:PropsWithChildren) {
      <div className="w-full ">
       <Sidebar />
       <BottomContainer />
-      <div className="m-4 ml-2 w-full  h-full flex flex-col mt-20 lg:ml-64">
+      <div className="ml-2 w-full  h-full flex flex-col mt-20 lg:ml-64">
         {props.children}
       </div>
     </div>
