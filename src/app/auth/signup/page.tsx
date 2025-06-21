@@ -1,6 +1,5 @@
 "use client"; 
-
-import React, { useState } from 'react'; 
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import type { FieldValues } from 'react-hook-form';
 
@@ -9,35 +8,34 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
-import { AiOutlineGoogle, AiOutlineLock, AiOutlineUser, AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { AiOutlineGoogle, AiOutlineLock, AiOutlineUser, AiOutlineMail, AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
-
-interface LoginFormInputs extends FieldValues {
+interface SignupFormInputs extends FieldValues {
   username: string;
+  email: string;
   password: string;
 }
 
 export default function App() {
-  const [message, setMessage] = useState<string | null>(null); 
-  const [showPassword, setShowPassword] = useState<boolean>(false); 
+  const [message, setMessage] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
- 
-  const { control, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>({
+  const { control, handleSubmit, formState: { errors } } = useForm<SignupFormInputs>({
     defaultValues: {
       username: '',
+      email: '',
       password: '',
     },
   });
 
-
-  const onSubmit = (data: LoginFormInputs) => {
-    console.log('Login Data:', data);
-    setMessage(`Attempting to log in with username: ${data.username} and password: ${data.password}`);
+  const onSubmit = (data: SignupFormInputs) => {
+    console.log('Signup Data:', data);
+    setMessage(`Attempting to sign up with username: ${data.username}, email: ${data.email}, and password: ${data.password}`);
   };
 
-  const handleGoogleLogin = () => {
-    console.log('Logging in with Google...');
-    setMessage('Redirecting to Google for login...');
+  const handleGoogleSignup = () => {
+    console.log('Signing up with Google...');
+    setMessage('Redirecting to Google for signup...');
   };
 
   const togglePasswordVisibility = () => {
@@ -48,9 +46,9 @@ export default function App() {
     <div className="min-h-screen bg-black flex items-center justify-center p-4 sm:p-6 md:p-8">
       <Card className="w-full max-w-sm bg-gray-900 text-white rounded-xl shadow-lg border-gray-700">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold text-white">Welcome Back</CardTitle>
+          <CardTitle className="text-3xl font-bold text-white">Create an Account</CardTitle>
           <CardDescription className="text-gray-400">
-            Enter your credentials to access your account.
+            Join us today! Enter your details below.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -59,14 +57,14 @@ export default function App() {
               <Label htmlFor="username" className="text-gray-300">Username</Label>
               <div className="relative">
                 <AiOutlineUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-lg" />
-                <Controller<LoginFormInputs>
+                <Controller<SignupFormInputs>
                   name="username"
                   control={control}
                   rules={{ required: 'Username is required' }}
                   render={({ field }) => (
                     <Input
                       id="username"
-                      placeholder="Abebe"
+                      placeholder="john.doe"
                       type="text"
                       className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:ring-blue-500 focus:border-blue-500"
                       {...field}
@@ -80,18 +78,48 @@ export default function App() {
             </div>
 
             <div className="space-y-2">
+              <Label htmlFor="email" className="text-gray-300">Email</Label>
+              <div className="relative">
+                <AiOutlineMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-lg" />
+                <Controller<SignupFormInputs>
+                  name="email"
+                  control={control}
+                  rules={{
+                    required: 'Email is required',
+                    pattern: {
+                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                      message: 'Invalid email address'
+                    }
+                  }}
+                  render={({ field }) => (
+                    <Input
+                      id="email"
+                      placeholder="john.doe@example.com"
+                      type="email"
+                      className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:ring-blue-500 focus:border-blue-500"
+                      {...field}
+                    />
+                  )}
+                />
+              </div>
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
               <Label htmlFor="password" className="text-gray-300">Password</Label>
               <div className="relative">
                 <AiOutlineLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-lg" />
-                <Controller<LoginFormInputs>
+                <Controller<SignupFormInputs>
                   name="password"
                   control={control}
-                  rules={{ required: 'Password is required', minLength: { value: 6, message: 'Password must be at least 6 characters' } }}
+                  rules={{ required: 'Password is required', minLength: { value: 8, message: 'Password must be at least 8 characters' } }}
                   render={({ field }) => (
                     <Input
                       id="password"
                       placeholder="••••••••"
-                      type={showPassword ? "text" : "password"} // Dynamic type based on showPassword state
+                      type={showPassword ? "text" : "password"}
                       className="pl-10 pr-10 bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:ring-blue-500 focus:border-blue-500"
                       {...field}
                     />
@@ -114,16 +142,13 @@ export default function App() {
                 <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
               )}
             </div>
-            <div className='flex w-full justify-end p-0'>
-                 <a href="#" className="ml-1 text-xs self-end text-blue-500 hover:underline">Forgot password?</a>
 
-            </div>
 
             <Button
               type="submit"
               className="w-full bg-[#FF3B30] hover:bg-[#ff3a30d8] text-white font-semibold py-2 rounded-md transition-colors duration-200"
             >
-              Log In
+              Sign Up
             </Button>
           </form>
 
@@ -144,14 +169,14 @@ export default function App() {
           <Button
             variant="outline"
             className="w-full flex items-center justify-center gap-2 bg-gray-800 border-gray-700 text-white hover:bg-gray-700 font-bold py-2 rounded-md transition-colors duration-200"
-            onClick={handleGoogleLogin}
+            onClick={handleGoogleSignup}
           >
             <AiOutlineGoogle className="text-lg" />
-            Login with Google
+            Sign Up with Google
           </Button>
         </CardContent>
         <CardFooter className="flex justify-center text-sm text-gray-400">
-          Don't have an account? <a href="#" className="ml-1 text-blue-500 hover:underline">Sign Up</a>
+          Already have an account? <a href="#" className="ml-1 text-blue-500 hover:underline">Log In</a>
         </CardFooter>
       </Card>
     </div>
