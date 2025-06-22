@@ -6,13 +6,14 @@ import { HiSparkles, HiViewList } from "react-icons/hi";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import PhoneSidebar from "./PhoneSidebar";
 import { SearchResultsOverlay } from "./SearchResultsOverlay";
-
+import useWashintStore from "@/store/useWashintStore";
+import { openSearchBar,closeSearchBar } from "@/lib/searchStateOperation";
 function Header() {
   const [showSearchResults, setShowSearchResults] = useState<boolean>(false); 
   const [searchTerm, setSearchTerm] = useState<string>(""); 
   const searchInputRef = useRef<HTMLInputElement>(null); 
   const searchContainerRef = useRef<HTMLDivElement>(null); 
-
+  const isSearchBarActive = useWashintStore((state)=> state.isSearchBarOpen)
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) { 
       if (
@@ -21,7 +22,8 @@ function Header() {
         searchInputRef.current &&
         !searchInputRef.current.contains(event.target as Node)
       ) {
-        setShowSearchResults(false);
+        // setShowSearchResults(false);
+        closeSearchBar()
       }
     }
 
@@ -32,16 +34,19 @@ function Header() {
   }, []);
 
   const handleFocus = (event: FocusEvent<HTMLInputElement>) => { 
-    setShowSearchResults(true);
+    // setShowSearchResults(true);
+    openSearchBar()
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => { 
     setSearchTerm(event.target.value);
-    setShowSearchResults(true);
+    // setShowSearchResults(true);
+    openSearchBar()
   };
 
   const handleCloseSearchResults = () => {
-    setShowSearchResults(false);
+    // setShowSearchResults(false);
+    closeSearchBar()
     setSearchTerm("");
   };
 
@@ -50,10 +55,10 @@ function Header() {
       <HiSparkles className="text-xl" />
       <h1 className="font-semibold">Washint</h1>
       <div
-        className="flex-grow ml-4 hidden md:flex md:ml-10 lg:ml-40 relative"
+        className="flex-grow ml-4  md:ml-10 lg:ml-40 relative"
         ref={searchContainerRef}
       >
-        <div className="bg-gradient-to-r from-[#FF3B30] via-black to-black gap-4 flex items-center border border-gray-700 rounded-full max-w-min px-4 h-10">
+        <div className="bg-gradient-to-r hidden md:flex from-[#FF3B30] via-black to-black gap-4  items-center border border-gray-700 rounded-full max-w-min px-4 h-10">
           <HiMagnifyingGlass className="text-2xl font-bold" />
           <input
             ref={searchInputRef}
@@ -65,8 +70,8 @@ function Header() {
             value={searchTerm}
           />
         </div>
-        {showSearchResults && (
-          <SearchResultsOverlay searchTerm={searchTerm} onClose={handleCloseSearchResults} />
+        {isSearchBarActive && (
+          <SearchResultsOverlay setSearchTerm={setSearchTerm} searchTerm={searchTerm} onClose={handleCloseSearchResults} />
         )}
       </div>
       <div className="flex flex-grow items-center justify-end gap-2">

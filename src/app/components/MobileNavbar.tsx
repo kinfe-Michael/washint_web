@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Home, Library, Search, Play } from "lucide-react"; // Importing icons from lucide-react
 import { LucideIcon } from "lucide-react"; // Import the type for Lucide icons
+import { openSearchBar } from "@/lib/searchStateOperation";
 
 export default function MobileNavbar() {
   const [activeLink, setActiveLink] = useState<string>("home");
@@ -33,7 +34,10 @@ export default function MobileNavbar() {
         label="Search"
         linkName="search"
         active={activeLink === "search"}
-        onClick={() => setActiveLink("search")}
+        onClick={() => {
+          setActiveLink("search")
+          openSearchBar()
+        }}
       />
 
       <NavItem
