@@ -1,12 +1,14 @@
 
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { HiMagnifyingGlass } from 'react-icons/hi2';
 
 
 interface SearchResultsOverlayProps {
   searchTerm: string;
   onClose: () => void;
+  setSearchTerm: (text:string) => any;
 }
 
 
@@ -17,7 +19,7 @@ interface SearchResultItem {
   subText: string;
 }
 
-export function SearchResultsOverlay({ searchTerm, onClose }: SearchResultsOverlayProps) {
+export function SearchResultsOverlay({ searchTerm, onClose,setSearchTerm }: SearchResultsOverlayProps) {
   const allDummyResults: SearchResultItem[] = [
     { id: '1', imageUrl: "/yohana.jpg", mainText: `Product A: ${searchTerm}`, subText: "Category: Electronics" },
     { id: '2', imageUrl: "/yohana.jpg", mainText: `Service B: ${searchTerm}`, subText: "Provider: Tech Solutions" },
@@ -43,6 +45,10 @@ export function SearchResultsOverlay({ searchTerm, onClose }: SearchResultsOverl
         item.subText.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : [];
+      const handleChange = (event: ChangeEvent<HTMLInputElement>) => { 
+        setSearchTerm(event.target.value);
+        
+      };
 
   return (
     <Card
@@ -64,6 +70,24 @@ export function SearchResultsOverlay({ searchTerm, onClose }: SearchResultsOverl
             "Start typing to see suggestions..."
           )}
         </CardDescription>
+          <div
+                className="flex-grow  flex w-full justify-start md:hidden md:ml-10 lg:ml-40 relative"
+                // ref={searchContainerRef}
+              >
+                <div className="bg-gradient-to-r w-full from-[#FF3B30] via-black to-black gap-4 flex items-center border border-gray-700 rounded-full max-w-min px-4 h-10">
+                  <HiMagnifyingGlass className="text-2xl font-bold" />
+                  <input
+                    // ref={searchInputRef}
+                    className="focus:outline-0 min-w-[200px] bg-transparent text-white placeholder-gray-400 w-full"
+                    type="text"
+                    placeholder="Search..."
+                    // onFocus={handleFocus}
+                    onChange={handleChange}
+                    value={searchTerm}
+                  />
+                </div>
+              
+              </div>
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-200 text-2xl"
