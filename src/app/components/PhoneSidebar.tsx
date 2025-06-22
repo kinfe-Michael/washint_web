@@ -23,10 +23,10 @@ function PhoneSidebar() {
           <SheetTitle className="text-white">Washint</SheetTitle>
         </SheetHeader>
         <div className="flex items-center  gap-2">
-          <Button className=" px-2 text-xs hidden md:block font-bold">
+          <Button className=" px-2 text-xs  md:block font-bold">
             Login
           </Button>
-          <Button className="bg-[#FF3B30] text-xs  px-1 hover:bg-[#ff3a30d8] font-bold">
+          <Button className="bg-[#FF3B30] text-xs   px-1 hover:bg-[#ff3a30d8] font-bold">
             Sign up
           </Button>
           
