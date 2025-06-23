@@ -53,12 +53,12 @@ export function SearchResultsOverlay({ searchTerm, onClose,setSearchTerm }: Sear
   return (
     <Card
       className="
-        fixed top-0 left-0 w-full h-full rounded-none // Default (mobile) full screen
-        md:absolute md:top-full md:mt-2 md:left-0 md:right-0 // Desktop positioning
-        bg-black text-white border border-gray-700 // Your specified dark UI
-        md:w-full md:h-auto md:max-h-[80vh] md:rounded-md // Desktop sizing
-        lg:max-w-xl lg:mx-auto // Optional: Limit width and center on large screens
-        z-[60] overflow-hidden // Ensure it's above other content and clips overflow
+        fixed top-0 left-0 w-full h-full rounded-none 
+        md:absolute md:top-full md:mt-2 md:left-0 md:right-0 
+        bg-black text-white border border-gray-700 
+        md:w-full md:h-auto md:max-h-[80vh] md:rounded-md 
+        lg:max-w-xl lg:mx-auto 
+        z-[60] overflow-hidden 
       "
     >
       <CardHeader className="pb-2 relative">
