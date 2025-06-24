@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Home, Library, Search, Play } from "lucide-react"; // Importing icons from lucide-react
 import { LucideIcon } from "lucide-react"; // Import the type for Lucide icons
 import { openSearchBar } from "@/lib/searchStateOperation";
+import Link from "next/link";
 
 export default function MobileNavbar() {
   const [activeLink, setActiveLink] = useState<string>("home");
@@ -17,6 +18,7 @@ export default function MobileNavbar() {
         icon={Home}
         label="Home"
         linkName="home"
+        routeTo={"/"}
         active={activeLink === "home"}
         onClick={() => setActiveLink("home")}
       />
@@ -25,6 +27,7 @@ export default function MobileNavbar() {
         icon={Library}
         label="Library"
         linkName="library"
+        routeTo={"/playlist"}
         active={activeLink === "library"}
         onClick={() => setActiveLink("library")}
       />
@@ -33,6 +36,7 @@ export default function MobileNavbar() {
         icon={Search}
         label="Search"
         linkName="search"
+        routeTo={""}
         active={activeLink === "search"}
         onClick={() => {
           setActiveLink("search")
@@ -44,6 +48,7 @@ export default function MobileNavbar() {
         icon={Play}
         label="Playing"
         linkName="playing"
+        routeTo={"/song"}
         active={activeLink === "playing"}
         onClick={() => setActiveLink("playing")}
       />
@@ -56,6 +61,7 @@ interface NavItemProps {
   label: string;
   linkName: string;
   active: boolean;
+  routeTo:string;
   onClick: () => void;
 }
 
@@ -64,9 +70,13 @@ const NavItem: React.FC<NavItemProps> = ({
   label,
   active,
   onClick,
+  routeTo,
 }) => {
+ 
+
   return (
-    <button
+    <Link href={routeTo}>
+      <button
       className={`flex flex-col items-center px-4 py-2 rounded-lg transition-colors duration-200
                   ${
                     active
@@ -80,5 +90,7 @@ const NavItem: React.FC<NavItemProps> = ({
 
       <span className="text-xs mt-1 font-medium font-inter">{label}</span>
     </button>
+    </Link>
+  
   );
 };
