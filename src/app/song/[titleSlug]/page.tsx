@@ -1,5 +1,5 @@
 import React from 'react'
-import PageWraper from '../components/PageWraper'
+import PageWraper from '../../components/PageWraper'
 
 function page() {
   return (
