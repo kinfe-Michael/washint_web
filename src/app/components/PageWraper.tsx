@@ -4,10 +4,10 @@ import BottomContainer from "./BottomContainer"
 
 function PageWraper(props:PropsWithChildren) {
   return (
-     <div className="w-full ">
+     <div className="w-full">
       <Sidebar />
       <BottomContainer />
-      <div className="ml-2 w-full  h-full flex flex-col mt-20 lg:ml-64">
+      <div className=" w-full  h-full flex flex-col mt-20 lg:ml-64">
         {props.children}
       </div>
     </div>

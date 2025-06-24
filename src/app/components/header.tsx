@@ -8,6 +8,7 @@ import PhoneSidebar from "./PhoneSidebar";
 import { SearchResultsOverlay } from "./SearchResultsOverlay";
 import useWashintStore from "@/store/useWashintStore";
 import { openSearchBar,closeSearchBar } from "@/lib/searchStateOperation";
+import Link from "next/link";
 function Header() {
   const [showSearchResults, setShowSearchResults] = useState<boolean>(false); 
   const [searchTerm, setSearchTerm] = useState<string>(""); 
@@ -53,7 +54,10 @@ function Header() {
   return (
     <header className="fixed flex top-0 h-16 left-0 right-0 z-50 bg-black text-white items-center px-4 shadow-md">
       <HiSparkles className="text-xl" />
+      <Link href={"/"}>
       <h1 className="font-semibold">Washint</h1>
+
+      </Link>
       <div
         className="flex-grow ml-4  md:ml-10 lg:ml-40 relative"
         ref={searchContainerRef}
@@ -75,10 +79,16 @@ function Header() {
         )}
       </div>
       <div className="flex flex-grow items-center justify-end gap-2">
+       <Link href={"/auth/login"}>
         <Button className="px-2 text-xs hidden md:block font-bold">Login</Button>
+
+       </Link>
+       <Link href={"/auth/signup"}>
         <Button className="bg-[#FF3B30] text-xs px-1 hover:bg-[#ff3a30d8] font-bold">
           Sign up
         </Button>
+       </Link>
+       
         <PhoneSidebar />
       </div>
     </header>

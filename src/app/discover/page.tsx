@@ -6,7 +6,10 @@ import Scroller from "../components/Scroller";
 function page() {
   return (
     <PageWraper>
-      <Scroller title="Top">
+      {
+      // temporary route 
+      }
+      <Scroller title="Top" routeTo="">
           <MusicCard
           url="/yohana.jpg"
           alt="yohana"
@@ -109,7 +112,7 @@ function page() {
           title="Yetalesh"
           artist="Yohana"
         />
-           <MusicCard
+           <MusicCard 
           url="/yohana.jpg"
           alt="yohana"
           title="Yetalesh"

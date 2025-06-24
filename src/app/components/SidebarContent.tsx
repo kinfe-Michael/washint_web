@@ -16,9 +16,13 @@ import {
   HiViewList,
 } from "react-icons/hi";
 import { HiLanguage, HiPlusCircle } from "react-icons/hi2";
+import Link from "next/link";
 function SidebarContent() {
-  function SideBarButtons({ children }: { children: ReactNode }) {
-    return <Button className="hover:text-gray-500">{children}</Button>;
+  function SideBarButtons({ children,routeTo }: { children: ReactNode,routeTo:string }) {
+  
+    return <Link href={routeTo}>
+    <Button className="hover:text-gray-500">{children}</Button>
+    </Link> ;
   }
   function SideBarcard({
     title,
@@ -41,43 +45,43 @@ function SidebarContent() {
   return (
     <div className="flex text-sm flex-col gap-1">
       <SideBarcard title="Menu">
-        <SideBarButtons>
+        <SideBarButtons routeTo="/discover">
           <HiSun />
           Discover
         </SideBarButtons>
-        <SideBarButtons>
+        <SideBarButtons routeTo="/albums">
           <HiCheckCircle />
           Albums
         </SideBarButtons>
-        <SideBarButtons>
+        <SideBarButtons routeTo="/artists">
           <HiMicrophone />
           Artist
         </SideBarButtons>
-        <SideBarButtons>
+        <SideBarButtons routeTo="/songs">
           <HiMusicNote />
           Song
         </SideBarButtons>
-        <SideBarButtons>
+        <SideBarButtons routeTo="/settings">
           <CiSettings />
           Settings
         </SideBarButtons>
       </SideBarcard>
       <SideBarcard title="Library">
-        <SideBarButtons>
+        <SideBarButtons routeTo="/favorite">
           <HiHeart className="text-red-600" />
           Favorite
         </SideBarButtons>
-        <SideBarButtons>
+        <SideBarButtons routeTo="/recent">
           <HiClock />
           Recent
         </SideBarButtons>
       </SideBarcard>
       <SideBarcard title="Playlist">
-        <SideBarButtons>
+        <SideBarButtons  routeTo={""}>
           <HiPlusCircle />
           Create new
         </SideBarButtons>
-        <SideBarButtons>
+        <SideBarButtons routeTo={""}>
           <HiViewList />
           Sad soul
         </SideBarButtons>

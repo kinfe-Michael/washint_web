@@ -1,4 +1,4 @@
-// components/playlist-folder.tsx
+
 import { cn } from "@/lib/utils";
 import { FaFolder } from "react-icons/fa";
 import Image from "next/image";

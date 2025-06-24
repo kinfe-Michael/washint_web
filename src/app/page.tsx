@@ -7,7 +7,7 @@ import Sidebar from "./components/sidebar";
 export default function Home() {
   return (
     <PageWraper>
-      <Scroller title="favorite">
+      <Scroller title="favorite" routeTo="">
         <MusicCard
           url="/yohana.jpg"
           alt="yohana"
