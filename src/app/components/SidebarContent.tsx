@@ -17,12 +17,24 @@ import {
 } from "react-icons/hi";
 import { HiLanguage, HiPlusCircle } from "react-icons/hi2";
 import Link from "next/link";
+import { Popover, PopoverTrigger } from "@/components/ui/popover";
+import { PopoverContent } from "@radix-ui/react-popover";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import CreatePlaylist from "./CreatePlaylist";
 function SidebarContent() {
-  function SideBarButtons({ children,routeTo }: { children: ReactNode,routeTo:string }) {
-  
-    return <Link href={routeTo}>
-    <Button className="hover:text-gray-500">{children}</Button>
-    </Link> ;
+  function SideBarButtons({
+    children,
+    routeTo,
+  }: {
+    children: ReactNode;
+    routeTo: string;
+  }) {
+    return (
+      <Link href={routeTo}>
+        <Button className="hover:text-gray-500">{children}</Button>
+      </Link>
+    );
   }
   function SideBarcard({
     title,
@@ -77,16 +89,13 @@ function SidebarContent() {
         </SideBarButtons>
       </SideBarcard>
       <SideBarcard title="Playlist">
-        <SideBarButtons  routeTo={""}>
-          <HiPlusCircle />
-          Create new
-        </SideBarButtons>
+      <CreatePlaylist/>
+
         <SideBarButtons routeTo={""}>
           <HiViewList />
           Sad soul
         </SideBarButtons>
       </SideBarcard>
-      
     </div>
   );
 }
