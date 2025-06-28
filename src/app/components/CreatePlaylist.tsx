@@ -35,7 +35,7 @@ function CreatePlaylist() {
   return (
     <div>
       <div className="flex lg:hidden">
-        <Drawer >
+        <Drawer>
           <DrawerTrigger className="text-white indent-2">
             {/* <HiPlusCircle className="text-xl m-2" /> */}
            &#43; Create new
