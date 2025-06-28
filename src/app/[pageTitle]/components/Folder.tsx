@@ -21,14 +21,14 @@ export function PlaylistFolder({
       className={cn(
         "flex flex-col items-start relative justify-center rounded-lg p-1 cursor-pointer transition-colors duration-200",
         "bg-black hover:bg-gray-900",
-        "w-32 h-48",
+        "w-32 md:w-48 md:h-64 h-48",
         className
       )}
       {...props}
     >
         
       {imageUrl ? (
-        <div className="relative w-32 h-32 mb-2">
+        <div className="relative w-32 h-32 md:w-48 md:h-48 mb-2">
           <Image
             src={imageUrl}
             alt={`Image for ${folderName}`}

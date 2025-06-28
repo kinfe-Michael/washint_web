@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
 import PageWraper from "../components/PageWraper";
-import Scroller from "../components/Scroller";
 import { PlaylistFolder } from "./components/Folder";
 
 interface PageProps {
@@ -24,7 +23,7 @@ async function page({ params }: PageProps) {
     <PageWraper>
       <div className="text-white flex flex-col items-start">
         {pageTitle}
-        <div className="flex  flex-wrap gap-2 w-full justify-around md:justify-start">
+        <div className="flex  flex-wrap gap-2 md:gap-6 w-full justify-around md:justify-start">
           {componentTorender}
         </div>
       </div>
