@@ -11,7 +11,7 @@ export default function Home() {
         <MusicCard
           url="/yohana.jpg"
           alt="yohana"
-          title="Yetalesh"
+          title="hey-jude"
           artist="Yohana"
         />
       </Scroller>

@@ -1,7 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 
 function MusicCard({
-  url,
+  url:imageUrl,
   alt,
   title,
   artist,
@@ -12,7 +13,7 @@ function MusicCard({
   artist: string;
 }) {
   return (
-    <div
+    <Link href={`/song/${title}`}
       className="
       
         text-white lg:p-2
@@ -24,7 +25,7 @@ function MusicCard({
       "
     >
       <Image
-        src={url}
+        src={imageUrl}
         alt={alt}
         height={200}
         width={200}
@@ -36,7 +37,7 @@ function MusicCard({
           {artist}
         </h1>{" "}
       </div>
-    </div>
+    </Link>
   );
 }
 
