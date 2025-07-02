@@ -9,11 +9,41 @@ export default function Home() {
     <PageWraper>
       <Scroller title="favorite" routeTo="">
         <MusicCard
-          url="/yohana.jpg"
+        musicUrl="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+          imageUrl="/yohana.jpg"
           alt="yohana"
           title="hey-jude"
           artist="Yohana"
         />
+         <MusicCard
+        musicUrl="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+          imageUrl="/yohana.jpg"
+          alt="yohana"
+          title="hey-jude"
+          artist="Yohana"
+        />
+         <MusicCard
+        musicUrl="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
+          imageUrl="/yohana.jpg"
+          alt="yohana"
+          title="hey-jude"
+          artist="Yohana"
+        />
+         <MusicCard
+        musicUrl="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
+          imageUrl="/yohana.jpg"
+          alt="yohana"
+          title="hey-jude"
+          artist="Yohana"
+        />
+         <MusicCard
+        musicUrl="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3"
+          imageUrl="/yohana.jpg"
+          alt="yohana"
+          title="hey-jude"
+          artist="Yohana"
+        />
+        
       </Scroller>
     </PageWraper>
   );
