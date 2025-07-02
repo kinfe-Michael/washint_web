@@ -1,20 +1,42 @@
+"use client"
+import { cn } from "@/lib/utils";
+import useWashintPlayer from "@/store/useWashintPlayer";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { FaPlay } from "react-icons/fa";
 
 function MusicCard({
-  url:imageUrl,
+  musicUrl,
+  imageUrl,
   alt,
   title,
   artist,
 }: {
-  url: string;
+  musicUrl: string;
+  imageUrl: string;
   alt: string;
   title: string;
   artist: string;
 }) {
+  const loadTrack = useWashintPlayer((state)=> state.loadTrack)
+  const [hoverStyle,setHoverStyle] = useState("hidden")
+  function handleClick(){
+    loadTrack({
+      url:musicUrl,
+      title,
+      artist,
+      imageUrl,
+      titleSlug:title,
+      artistSlug:artist,
+
+    })
+  }
   return (
     <Link href={`/song/${title}`}
+    onClick={handleClick}
+    onMouseOver={()=>setHoverStyle("flex")}
+    onMouseLeave={()=>setHoverStyle("hidden")}
       className="
         
         text-white lg:p-2
@@ -33,8 +55,8 @@ function MusicCard({
         width={200}
         className="rounded-md"
       />
-       <div className="absolute top-0  flex items-center justify-center w-[100px]
-        lg:w-[200px] h-full  hover:text-32">
+       <div className={cn(`absolute top-0  flex items-center justify-center w-[100px]
+        lg:w-[200px] h-full  hover:text-32`,hoverStyle)}>
           <FaPlay/>
       </div>
       </div>

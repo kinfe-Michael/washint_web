@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import PageWraper from '@/app/components/PageWraper';
 
 const SkeletonMusicDetailCard: React.FC = () => (
   <Card className="w-full bg-gray-800 text-white border-gray-700 rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row items-center p-4 md:p-6 mb-8 animate-pulse">
@@ -34,6 +35,7 @@ const SkeletonMusicListItem: React.FC = () => (
 
 export default function MusicDetailLoading() {
   return (
+    <PageWraper>
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black p-4 md:p-8">
       <div className="flex flex-col items-center p-4">
         <SkeletonMusicDetailCard />
@@ -57,5 +59,7 @@ export default function MusicDetailLoading() {
         </div>
       </div>
     </div>
+    </PageWraper>
+
   );
 }
