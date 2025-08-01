@@ -1,14 +1,15 @@
 
-import React, { ChangeEvent } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import Image from "next/image";
+import { ChangeEvent } from 'react';
 import { HiMagnifyingGlass } from 'react-icons/hi2';
 
 
 interface SearchResultsOverlayProps {
   searchTerm: string;
   onClose: () => void;
-  setSearchTerm: (text:string) => any;
+  setSearchTerm: (text:string) => void;
 }
 
 
@@ -62,7 +63,7 @@ export function SearchResultsOverlay({ searchTerm, onClose,setSearchTerm }: Sear
       "
     >
       <CardHeader className="pb-2 relative">
-        <CardTitle className="text-lg">Search Results for "{searchTerm}"</CardTitle>
+        <CardTitle className="text-lg">Search Results for {searchTerm}</CardTitle>
         <CardDescription className="text-gray-400">
           {searchTerm ? (
             `Showing ${filteredResults.length} result(s).`
@@ -105,7 +106,8 @@ export function SearchResultsOverlay({ searchTerm, onClose,setSearchTerm }: Sear
                   key={item.id} 
                   className="p-3 flex items-center gap-4 hover:bg-gray-800 rounded-md cursor-pointer transition-colors duration-200"
                 >
-                  <img
+                  <Image
+                  layout="fill"
                     src={item.imageUrl}
                     alt="Result thumbnail"
                     className="w-12 h-12 object-cover rounded-md flex-shrink-0"
@@ -119,7 +121,7 @@ export function SearchResultsOverlay({ searchTerm, onClose,setSearchTerm }: Sear
             </ul>
           </ScrollArea>
         ) : (
-          <p className="text-gray-400 p-4">No results found for "{searchTerm}".</p>
+          <p className="text-gray-400 p-4">No results found for {searchTerm}.</p>
         )}
       </CardContent>
     </Card>

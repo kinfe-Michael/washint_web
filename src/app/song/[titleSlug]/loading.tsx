@@ -1,8 +1,8 @@
 
 
-import React from 'react';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import PageWraper from '@/app/components/PageWraper';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import React from 'react';
 
 const SkeletonMusicDetailCard: React.FC = () => (
   <Card className="w-full bg-gray-800 text-white border-gray-700 rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row items-center p-4 md:p-6 mb-8 animate-pulse">

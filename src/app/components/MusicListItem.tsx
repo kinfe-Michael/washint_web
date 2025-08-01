@@ -1,9 +1,9 @@
 
 
-import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Music } from '../data/music'; 
+import React from 'react';
+import { Music } from '../data/music';
 
 interface MusicListItemProps {
   music: Music;

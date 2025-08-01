@@ -1,16 +1,15 @@
 
 "use client";
-import React, { useState, useEffect, useRef, ChangeEvent, FocusEvent, MouseEvent } from "react"; // Import React specific types
 import { Button } from "@/components/ui/button";
-import { HiSparkles, HiViewList } from "react-icons/hi";
+import { closeSearchBar, openSearchBar } from "@/lib/searchStateOperation";
+import useWashintStore from "@/store/useWashintStore";
+import Link from "next/link";
+import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react"; // Import React specific types
+import { HiSparkles } from "react-icons/hi";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import PhoneSidebar from "./PhoneSidebar";
 import { SearchResultsOverlay } from "./SearchResultsOverlay";
-import useWashintStore from "@/store/useWashintStore";
-import { openSearchBar,closeSearchBar } from "@/lib/searchStateOperation";
-import Link from "next/link";
 function Header() {
-  const [showSearchResults, setShowSearchResults] = useState<boolean>(false); 
   const [searchTerm, setSearchTerm] = useState<string>(""); 
   const searchInputRef = useRef<HTMLInputElement>(null); 
   const searchContainerRef = useRef<HTMLDivElement>(null); 
@@ -34,7 +33,7 @@ function Header() {
     };
   }, []);
 
-  const handleFocus = (event: FocusEvent<HTMLInputElement>) => { 
+  const handleFocus = () => { 
     // setShowSearchResults(true);
     openSearchBar()
   };

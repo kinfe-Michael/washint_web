@@ -1,9 +1,8 @@
 "use client";
-import React, { useState } from "react";
-import { Home, Library, Search, Play } from "lucide-react"; // Importing icons from lucide-react
-import { LucideIcon } from "lucide-react"; // Import the type for Lucide icons
 import { openSearchBar } from "@/lib/searchStateOperation";
+import { Home, Library, LucideIcon, Play, Search } from "lucide-react"; // Importing icons from lucide-react
 import Link from "next/link";
+import React, { useState } from "react";
 
 export default function MobileNavbar() {
   const [activeLink, setActiveLink] = useState<string>("home");

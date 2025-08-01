@@ -1,8 +1,8 @@
 "use client";
 
-import React from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import React from 'react';
 import { Music } from '../data/music';
 interface MusicDetailCardProps {
   music: Music;

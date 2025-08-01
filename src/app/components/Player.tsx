@@ -1,22 +1,23 @@
 // components/Player.js
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button"; // Assuming you have shadcn/ui Button
+import { useCallback, useEffect, useRef } from "react";
 
 // Importing Zustand store from a separate file using a relative path for stability
-import useWashintPlayer from "@/store/useWashintPlayer"; 
+import useWashintPlayer from "@/store/useWashintPlayer";
 
 // Importing icons from react-icons/fa as requested
-import { 
-  FaPause, 
-  FaPlay, 
-  FaStepBackward, 
-  FaStepForward, 
-  FaVolumeUp, 
-  FaVolumeMute, 
-  FaRedo 
+import {
+  FaPause,
+  FaPlay,
+  FaRedo,
+  FaStepBackward,
+  FaStepForward,
+  FaVolumeMute,
+  FaVolumeUp
 } from "react-icons/fa";
+import Image from "next/image";
 
 
 export default function Player() {
@@ -29,7 +30,6 @@ export default function Player() {
   const seeking = useWashintPlayer((state) => state.seeking);
   const loop = useWashintPlayer((state) => state.repet); // Using 'repet' as per your store definition
   const currentTrack = useWashintPlayer((state) => state.currentTrack);
-  const error = useWashintPlayer((state) => state.error);
 
   const setDuration = useWashintPlayer((state) => state.setDuration);
   const setPlayed = useWashintPlayer((state) => state.setPlayed);
@@ -39,7 +39,6 @@ export default function Player() {
   const setSeeking = useWashintPlayer((state) => state.setSeeking);
   const toggleLoop = useWashintPlayer((state) => state.togleRepet); // Using 'togleRepet' as per your store definition
   const setError = useWashintPlayer((state) => state.setError);
-  const loadTrack = useWashintPlayer((state) => state.loadTrack); // To load a new track
 
   // Reference to the HTML audio element
   const mediaRef = useRef<HTMLAudioElement>(null);
@@ -84,21 +83,21 @@ export default function Player() {
   }, [volume, mute]);
 
   // Callback for when audio metadata is loaded
-  const handleLoadedMetadata = useCallback((event: React.SyntheticEvent<HTMLAudioElement, Event>) => {
+  const handleLoadedMetadata = useCallback(() => {
     if (mediaRef.current) {
       setDuration(mediaRef.current.duration);
     }
   }, [setDuration]);
 
   // Callback for time updates during playback
-  const handleTimeUpdate = useCallback((event: React.SyntheticEvent<HTMLAudioElement, Event>) => {
+  const handleTimeUpdate = useCallback(() => {
     if (mediaRef.current && !seeking) {
       setPlayed(mediaRef.current.currentTime);
     }
   }, [seeking, setPlayed]);
 
   // Callback for when the audio ends
-  const handleAudioEnded = useCallback((event: React.SyntheticEvent<HTMLAudioElement, Event>) => {
+  const handleAudioEnded = useCallback(() => {
     setPlaying(false);
     setPlayed(0);
     // Add logic here to play the next song if desired
@@ -283,7 +282,8 @@ if(!currentTrack) return
         <div className="flex items-center h-full">
           {/* Album Art */}
           <div className="relative h-10 w-10 flex-shrink-0 rounded-lg overflow-hidden mr-3">
-            <img
+            <Image
+            layout="fill"
               className="rounded-lg object-cover w-full h-full"
               src={currentTrack?.imageUrl || "https://placehold.co/64x64/FF3B30/FFFFFF?text=Music"} 
               alt={currentTrack?.title || "Album Art"}
