@@ -1,7 +1,7 @@
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { ReactNode } from "react";
 import { capitalizeFirstLetter } from "@/lib/utils";
 import Link from "next/link";
+import { ReactNode } from "react";
 
 function Scroller({ title, children,routeTo }: { title: string; children: ReactNode,routeTo:string }) {
   return (

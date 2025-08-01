@@ -1,14 +1,13 @@
 // app/music-detail/[titleSlug]/page.tsx
 
 
-import React from 'react';
 
-import { fetchMusicBySlug, fetchMusicByArtist, fetchRelatedMusic, Music } from '../../data/music';
-import { notFound } from 'next/navigation'; // For handling 404 if music not found
-import PageWraper from '@/app/components/PageWraper';
 import { MusicDetailCard } from '@/app/components/MusicDetailCard';
-import { SectionTitle } from '@/app/components/SectionTitle';
 import { MusicListItem } from '@/app/components/MusicListItem';
+import PageWraper from '@/app/components/PageWraper';
+import { SectionTitle } from '@/app/components/SectionTitle';
+import { notFound } from 'next/navigation'; // For handling 404 if music not found
+import { fetchMusicByArtist, fetchMusicBySlug, fetchRelatedMusic } from '../../data/music';
 
 interface PageProps {
   params: Promise<{ titleSlug: string }> ; // Next.js automatically passes params for dynamic routes
@@ -41,7 +40,7 @@ export default async function MusicDetailPage( {params} : PageProps) {
           <div className="w-full max-w-4xl">
             <SectionTitle title={`More from ${music.artist}`} />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {otherMusicByArtist.map((item:any) => (
+              {otherMusicByArtist.map((item) => (
                 <MusicListItem key={item.id} music={item} />
               ))}
             </div>
@@ -53,7 +52,7 @@ export default async function MusicDetailPage( {params} : PageProps) {
           <div className="w-full max-w-4xl mt-8">
             <SectionTitle title="Related Songs" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {relatedSongs.map((item:any) => (
+              {relatedSongs.map((item) => (
                 <MusicListItem key={item.id} music={item} />
               ))}
             </div>

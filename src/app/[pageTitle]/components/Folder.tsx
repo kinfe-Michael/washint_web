@@ -1,7 +1,7 @@
 
 import { cn } from "@/lib/utils";
-import { FaFolder } from "react-icons/fa";
 import Image from "next/image";
+import { FaFolder } from "react-icons/fa";
 
 interface PlaylistFolderProps extends React.HTMLAttributes<HTMLDivElement> {
   folderName: string;

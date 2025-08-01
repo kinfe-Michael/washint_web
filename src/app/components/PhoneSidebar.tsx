@@ -1,16 +1,14 @@
-import React from "react";
-import { HiViewList } from "react-icons/hi";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
+  SheetTrigger
 } from "@/components/ui/sheet";
-import SidebarContent from "./SidebarContent";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { HiViewList } from "react-icons/hi";
+import SidebarContent from "./SidebarContent";
 function PhoneSidebar() {
   return (
     <Sheet>

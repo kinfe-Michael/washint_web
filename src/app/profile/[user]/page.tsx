@@ -3,7 +3,6 @@ import PageWraper from '@/app/components/PageWraper'
 import Scroller from '@/app/components/Scroller'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
-import React from 'react'
 import { HiPlus } from 'react-icons/hi'
 
 function page() {
@@ -32,111 +31,11 @@ function page() {
                 </div>
             </div>
         </div>
-        <Scroller title="My songs">
-          <MusicCard
-          url="/yohana.jpg"
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
+        <Scroller routeTo='' title="My songs">
+        
            <MusicCard
-          url="/yohana.jpg"
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-          url="/yohana.jpg"
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-          url="/yohana.jpg"
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-          url="/yohana.jpg"
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-          url="/yohana.jpg"
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-         <MusicCard
-          url="/yohana.jpg"
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-          url="/yohana.jpg"
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-          url="/yohana.jpg"
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-          url="/yohana.jpg"
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-          url="/yohana.jpg"
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-          url="/yohana.jpg"
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-         <MusicCard
-          url="/yohana.jpg"
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-          url="/yohana.jpg"
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-          url="/yohana.jpg"
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-          url="/yohana.jpg"
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-          url="/yohana.jpg"
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-          url="/yohana.jpg"
+          imageUrl="/yohana.jpg"
+          musicUrl=''
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"

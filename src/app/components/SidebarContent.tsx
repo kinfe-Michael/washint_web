@@ -1,26 +1,17 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { ReactNode } from "react";
 import { CiSettings } from "react-icons/ci";
 import {
   HiCheckCircle,
   HiClock,
-  HiDotsVertical,
   HiHeart,
   HiMicrophone,
   HiMusicNote,
   HiSun,
-  HiViewList,
+  HiViewList
 } from "react-icons/hi";
-import { HiLanguage, HiPlusCircle } from "react-icons/hi2";
-import Link from "next/link";
-import { Popover, PopoverTrigger } from "@/components/ui/popover";
-import { PopoverContent } from "@radix-ui/react-popover";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import CreatePlaylist from "./CreatePlaylist";
 function SidebarContent() {
   function SideBarButtons({

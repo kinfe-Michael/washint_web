@@ -1,4 +1,3 @@
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import MusicCard from "../components/MusicCard";
 import PageWraper from "../components/PageWraper";
 import Scroller from "../components/Scroller";
@@ -6,114 +5,130 @@ import Scroller from "../components/Scroller";
 function page() {
   return (
     <PageWraper>
-      {
-      // temporary route 
-      }
+
       <Scroller title="Top" routeTo="">
           <MusicCard
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"
         />
            <MusicCard
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"
         />
            <MusicCard
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"
         />
            <MusicCard
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"
         />
            <MusicCard
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"
         />
            <MusicCard
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"
         />
          <MusicCard
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"
         />
            <MusicCard
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"
         />
            <MusicCard
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"
         />
            <MusicCard
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"
         />
            <MusicCard
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"
         />
            <MusicCard
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"
         />
          <MusicCard
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"
         />
            <MusicCard
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"
         />
            <MusicCard
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"
         />
            <MusicCard
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"
         />
            <MusicCard
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"
         />
            <MusicCard 
-          url="/yohana.jpg"
+         imageUrl="/yohana.jpg"
+         musicUrl=""
           alt="yohana"
           title="Yetalesh"
           artist="Yohana"

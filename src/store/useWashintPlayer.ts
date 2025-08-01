@@ -54,7 +54,7 @@ interface WashintPlayerState {
   resetState: () => void; // Resets all player-related state
 }
 
-const useWashintPlayer = create<WashintPlayerState>((set, get) => ({
+const useWashintPlayer = create<WashintPlayerState>((set) => ({
   // Initial State
  
   playing: false,

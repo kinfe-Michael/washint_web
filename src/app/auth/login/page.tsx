@@ -151,7 +151,7 @@ export default function App() {
           </Button>
         </CardContent>
         <CardFooter className="flex justify-center text-sm text-gray-400">
-          Don't have an account? <a href="#" className="ml-1 text-blue-500 hover:underline">Sign Up</a>
+          {"Don't have an account? "}<a href="#" className="ml-1 text-blue-500 hover:underline">Sign Up</a>
         </CardFooter>
       </Card>
     </div>

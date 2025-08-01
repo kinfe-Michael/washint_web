@@ -1,4 +1,3 @@
-import React from "react";
 import MobileNavbar from "./MobileNavbar";
 import Player from "./Player";
 

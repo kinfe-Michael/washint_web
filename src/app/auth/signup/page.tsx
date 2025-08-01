@@ -1,14 +1,14 @@
 "use client"; 
-import React, { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useState } from 'react';
 import type { FieldValues } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
 
-import { AiOutlineGoogle, AiOutlineLock, AiOutlineUser, AiOutlineMail, AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineGoogle, AiOutlineLock, AiOutlineMail, AiOutlineUser } from 'react-icons/ai';
 
 interface SignupFormInputs extends FieldValues {
   username: string;
