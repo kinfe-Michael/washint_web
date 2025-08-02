@@ -28,6 +28,12 @@
     "vaul": "^1.1.2",
     "zustand": "^5.0.7"
   },
+   "overrides": {
+    "zustand": {
+      "react": "$react",
+      "react-dom": "$react"
+    }
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
