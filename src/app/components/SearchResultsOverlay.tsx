@@ -107,7 +107,8 @@ export function SearchResultsOverlay({ searchTerm, onClose,setSearchTerm }: Sear
                   className="p-3 flex items-center gap-4 hover:bg-gray-800 rounded-md cursor-pointer transition-colors duration-200"
                 >
                   <Image
-                  layout="fill"
+                    width={50}
+                    height={50}
                     src={item.imageUrl}
                     alt="Result thumbnail"
                     className="w-12 h-12 object-cover rounded-md flex-shrink-0"
