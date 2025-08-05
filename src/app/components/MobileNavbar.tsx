@@ -1,12 +1,13 @@
 "use client";
 import { openSearchBar } from "@/lib/searchStateOperation";
 import { Home, Library, LucideIcon, Play, Search } from "lucide-react"; // Importing icons from lucide-react
-import Link from "next/link";
 import React, { useState } from "react";
+import NavLink from "./CustomNavLink";
+import { useCustomRouter } from "@/hooks/useCustomRouter";
 
 export default function MobileNavbar() {
   const [activeLink, setActiveLink] = useState<string>("home");
-
+  const router = useCustomRouter()
   return (
     <nav
       className="fixed bottom-0 left-0 w-full bg-gray-900 text-white p-2
@@ -19,7 +20,10 @@ export default function MobileNavbar() {
         linkName="home"
         routeTo={"/"}
         active={activeLink === "home"}
-        onClick={() => setActiveLink("home")}
+        onClick={() => {
+          setActiveLink("home")
+          router.push("/")
+        }}
       />
 
       <NavItem
@@ -28,7 +32,10 @@ export default function MobileNavbar() {
         linkName="library"
         routeTo={"/playlist"}
         active={activeLink === "library"}
-        onClick={() => setActiveLink("library")}
+        onClick={() => {
+          setActiveLink("library")
+          router.push("/library")
+        }}
       />
 
       <NavItem
@@ -49,7 +56,10 @@ export default function MobileNavbar() {
         linkName="playing"
         routeTo={"/song"}
         active={activeLink === "playing"}
-        onClick={() => setActiveLink("playing")}
+        onClick={() => {
+          setActiveLink("playing")
+          router.push("/playing")
+        }}
       />
     </nav>
   );
@@ -74,7 +84,7 @@ const NavItem: React.FC<NavItemProps> = ({
  
 
   return (
-    <Link href={routeTo}>
+    <NavLink href={routeTo}>
       <button
       className={`flex flex-col items-center px-4 py-2 rounded-lg transition-colors duration-200
                   ${
@@ -89,7 +99,7 @@ const NavItem: React.FC<NavItemProps> = ({
 
       <span className="text-xs mt-1 font-medium font-inter">{label}</span>
     </button>
-    </Link>
+    </NavLink>
   
   );
 };

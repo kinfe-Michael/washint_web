@@ -2,8 +2,8 @@
 import { cn } from "@/lib/utils";
 import useWashintPlayer from "@/store/useWashintPlayer";
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
+import NavLink from "./CustomNavLink";
 import { FaPlay } from "react-icons/fa";
 
 function MusicCard({
@@ -33,7 +33,7 @@ function MusicCard({
     })
   }
   return (
-    <Link href={`/song/${title}`}
+    <NavLink href={`/song/${title}`}
     onClick={handleClick}
     onMouseOver={()=>setHoverStyle("flex")}
     onMouseLeave={()=>setHoverStyle("hidden")}
@@ -68,7 +68,7 @@ function MusicCard({
         </h1>
       </div>
      
-    </Link>
+    </NavLink>
   );
 }
 

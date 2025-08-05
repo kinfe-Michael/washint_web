@@ -1,5 +1,6 @@
 // Corrected RootLayout.tsx
 import Header from "./components/header";
+import ProgressBar from "./components/ProgressBar";
 // import Sidebar from "./components/sidebar"; // If you have a sidebar, integrate it later
 import "./globals.css";
 // import BottomContainer from "./components/BottomContainer"; // If you have a fixed footer, integrate it later
@@ -28,6 +29,7 @@ export default function RootLayout({
             </ScrollArea>
           </div>
         </div>
+        <ProgressBar/>
       </body>
     </html>
   );
