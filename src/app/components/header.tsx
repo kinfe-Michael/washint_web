@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { closeSearchBar, openSearchBar } from "@/lib/searchStateOperation";
 import useWashintStore from "@/store/useWashintStore";
-import Link from "next/link";
+import NavLink  from "./CustomNavLink";
 import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react"; // Import React specific types
 import { HiSparkles } from "react-icons/hi";
 import { HiMagnifyingGlass } from "react-icons/hi2";
@@ -53,10 +53,10 @@ function Header() {
   return (
     <header className="fixed flex top-0 h-16 left-0 right-0 z-50 bg-black text-white items-center px-4 shadow-md">
       <HiSparkles className="text-xl" />
-      <Link href={"/"}>
+      <NavLink href={"/"}>
       <h1 className="font-semibold">Washint</h1>
 
-      </Link>
+      </NavLink>
       <div
         className="flex-grow ml-4  md:ml-10 lg:ml-40 relative"
         ref={searchContainerRef}
@@ -78,15 +78,15 @@ function Header() {
         )}
       </div>
       <div className="flex flex-grow items-center justify-end gap-2">
-       <Link href={"/auth/login"}>
+       <NavLink href={"/auth/login"}>
         <Button className="px-2 text-xs hidden md:block font-bold">Login</Button>
 
-       </Link>
-       <Link href={"/auth/signup"}>
+       </NavLink>
+       <NavLink href={"/auth/signup"}>
         <Button className="bg-[#FF3B30] text-xs px-1 hover:bg-[#ff3a30d8] font-bold">
           Sign up
         </Button>
-       </Link>
+       </NavLink>
        
         <PhoneSidebar />
       </div>

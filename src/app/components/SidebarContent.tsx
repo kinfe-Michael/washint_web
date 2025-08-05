@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
+import NavLink from "./CustomNavLink";
 import { ReactNode } from "react";
 import { CiSettings } from "react-icons/ci";
 import {
@@ -22,9 +22,9 @@ function SidebarContent() {
     routeTo: string;
   }) {
     return (
-      <Link href={routeTo}>
+      <NavLink href={routeTo}>
         <Button className="hover:text-gray-500">{children}</Button>
-      </Link>
+      </NavLink>
     );
   }
   function SideBarcard({
