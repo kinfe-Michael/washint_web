@@ -10,7 +10,10 @@ import { Label } from '@/components/ui/label';
 
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineGoogle, AiOutlineLock, AiOutlineMail, AiOutlineUser } from 'react-icons/ai';
 
+// Update the interface to include first and last name
 interface SignupFormInputs extends FieldValues {
+  firstName: string;
+  lastName: string;
   username: string;
   email: string;
   password: string;
@@ -22,6 +25,8 @@ export default function App() {
 
   const { control, handleSubmit, formState: { errors } } = useForm<SignupFormInputs>({
     defaultValues: {
+      firstName: '',
+      lastName: '',
       username: '',
       email: '',
       password: '',
@@ -30,7 +35,8 @@ export default function App() {
 
   const onSubmit = (data: SignupFormInputs) => {
     console.log('Signup Data:', data);
-    setMessage(`Attempting to sign up with username: ${data.username}, email: ${data.email}, and password: ${data.password}`);
+    // Update the message to include the new fields
+    setMessage(`Attempting to sign up with: First Name: ${data.firstName}, Last Name: ${data.lastName}, Username: ${data.username}, Email: ${data.email}, and Password: ${data.password}`);
   };
 
   const handleGoogleSignup = () => {
@@ -43,7 +49,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4 sm:p-6 md:p-8">
+    <div className="min-h-screen bg-black flex items-center justify-center p-4 sm:p-6 md:p-8 font-sans">
       <Card className="w-full max-w-sm bg-gray-900 text-white rounded-xl shadow-lg border-gray-700">
         <CardHeader className="text-center">
           <CardTitle className="text-3xl font-bold text-white">Create an Account</CardTitle>
@@ -53,6 +59,51 @@ export default function App() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            
+            {/* First and Last Name fields */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="firstName" className="text-gray-300">First Name</Label>
+                <Controller<SignupFormInputs>
+                  name="firstName"
+                  control={control}
+                  rules={{ required: 'First name is required' }}
+                  render={({ field }) => (
+                    <Input
+                      id="firstName"
+                      placeholder="John"
+                      type="text"
+                      className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:ring-blue-500 focus:border-blue-500"
+                      {...field}
+                    />
+                  )}
+                />
+                {errors.firstName && (
+                  <p className="text-red-500 text-sm mt-1">{errors.firstName.message}</p>
+                )}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="lastName" className="text-gray-300">Last Name</Label>
+                <Controller<SignupFormInputs>
+                  name="lastName"
+                  control={control}
+                  rules={{ required: 'Last name is required' }}
+                  render={({ field }) => (
+                    <Input
+                      id="lastName"
+                      placeholder="Doe"
+                      type="text"
+                      className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:ring-blue-500 focus:border-blue-500"
+                      {...field}
+                    />
+                  )}
+                />
+                {errors.lastName && (
+                  <p className="text-red-500 text-sm mt-1">{errors.lastName.message}</p>
+                )}
+              </div>
+            </div>
+
             <div className="space-y-2">
               <Label htmlFor="username" className="text-gray-300">Username</Label>
               <div className="relative">
