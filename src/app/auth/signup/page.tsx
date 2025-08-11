@@ -1,5 +1,5 @@
-"use client"; 
-import { useState } from 'react';
+"use client";
+import { useState, useEffect } from 'react';
 import type { FieldValues } from 'react-hook-form';
 import { Controller, useForm } from 'react-hook-form';
 
@@ -22,8 +22,11 @@ interface SignupFormInputs extends FieldValues {
 export default function App() {
   const [message, setMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isCheckingUsername, setIsCheckingUsername] = useState<boolean>(false);
+  const [usernameMessage, setUsernameMessage] = useState<{ text: string, color: string } | null>(null);
+  const [usernameAvailability, setUsernameAvailability] = useState<boolean | null>(null);
 
-  const { control, handleSubmit, formState: { errors } } = useForm<SignupFormInputs>({
+  const { control, handleSubmit, formState: { errors }, watch } = useForm<SignupFormInputs>({
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -33,10 +36,63 @@ export default function App() {
     },
   });
 
+  const watchedUsername = watch('username');
+
+  // Debounce API call for username validation
+  useEffect(() => {
+    // Only check if the username has at least 3 characters
+    if (watchedUsername && watchedUsername.length >= 3) {
+      setIsCheckingUsername(true);
+      setUsernameAvailability(null);
+      setUsernameMessage(null);
+
+      const checkUsername = async () => {
+        try {
+          // Construct the API URL with the username
+          const response = await fetch(`http://localhost:8000/api/users/check_username/?username=${watchedUsername}`);
+          if (!response.ok) {
+            // Handle HTTP errors, e.g., 404, 500
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const data = await response.json();
+          // The API now returns 'is_available' and a 'message'
+          const isAvailable = data.is_available;
+          const apiMessage = data.message;
+
+          if (isAvailable) {
+            setUsernameMessage({ text: apiMessage, color: 'text-green-500' });
+            setUsernameAvailability(true);
+          } else {
+            setUsernameMessage({ text: apiMessage, color: 'text-red-500' });
+            setUsernameAvailability(false);
+          }
+        } catch (error) {
+          console.error('Error checking username:', error);
+          setUsernameMessage({ text: 'Could not check username. Please try again.', color: 'text-yellow-500' });
+          setUsernameAvailability(null);
+        } finally {
+          setIsCheckingUsername(false);
+        }
+      };
+
+      const debounceTimeout = setTimeout(checkUsername, 500);
+      return () => clearTimeout(debounceTimeout);
+    } else {
+      // Clear messages if username is too short or empty
+      setUsernameMessage(null);
+      setIsCheckingUsername(false);
+      setUsernameAvailability(null);
+    }
+  }, [watchedUsername]);
+
   const onSubmit = (data: SignupFormInputs) => {
-    console.log('Signup Data:', data);
-    // Update the message to include the new fields
-    setMessage(`Attempting to sign up with: First Name: ${data.firstName}, Last Name: ${data.lastName}, Username: ${data.username}, Email: ${data.email}, and Password: ${data.password}`);
+    // Only proceed with signup if username is available and not being checked
+    if (!isCheckingUsername && usernameAvailability) {
+      console.log('Signup Data:', data);
+      setMessage(`Attempting to sign up with: First Name: ${data.firstName}, Last Name: ${data.lastName}, Username: ${data.username}, Email: ${data.email}, and Password: ${data.password}`);
+    } else {
+      setMessage('Please enter a valid and available username.');
+    }
   };
 
   const handleGoogleSignup = () => {
@@ -60,7 +116,6 @@ export default function App() {
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             
-            {/* First and Last Name fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="firstName" className="text-gray-300">First Name</Label>
@@ -117,7 +172,10 @@ export default function App() {
                       id="username"
                       placeholder="john.doe"
                       type="text"
-                      className="pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:ring-blue-500 focus:border-blue-500"
+                      className={`pl-10 bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:ring-blue-500 focus:border-blue-500 
+                        ${usernameAvailability === false ? 'border-red-500 focus:border-red-500' : ''}
+                        ${usernameAvailability === true ? 'border-green-500 focus:border-green-500' : ''}
+                      `}
                       {...field}
                     />
                   )}
@@ -125,6 +183,12 @@ export default function App() {
               </div>
               {errors.username && (
                 <p className="text-red-500 text-sm mt-1">{errors.username.message}</p>
+              )}
+              {isCheckingUsername && (
+                <p className="text-sm mt-1 text-gray-400">Checking...</p>
+              )}
+              {usernameMessage && (
+                <p className={`text-sm mt-1 ${usernameMessage.color}`}>{usernameMessage.text}</p>
               )}
             </div>
 
@@ -197,7 +261,8 @@ export default function App() {
 
             <Button
               type="submit"
-              className="w-full bg-[#FF3B30] hover:bg-[#ff3a30d8] text-white font-semibold py-2 rounded-md transition-colors duration-200"
+              disabled={isCheckingUsername || !usernameAvailability}
+              className="w-full bg-[#FF3B30] hover:bg-[#ff3a30d8] text-white font-semibold py-2 rounded-md transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Sign Up
             </Button>
