@@ -12,8 +12,8 @@ import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineGoogle, AiOutlineLock, Ai
 
 // Update the interface to include first and last name
 interface SignupFormInputs extends FieldValues {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   username: string;
   email: string;
   password: string;
@@ -23,13 +23,14 @@ export default function App() {
   const [message, setMessage] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isCheckingUsername, setIsCheckingUsername] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [usernameMessage, setUsernameMessage] = useState<{ text: string, color: string } | null>(null);
   const [usernameAvailability, setUsernameAvailability] = useState<boolean | null>(null);
 
-  const { control, handleSubmit, formState: { errors }, watch } = useForm<SignupFormInputs>({
+  const { control, handleSubmit, formState: { errors }, watch, reset } = useForm<SignupFormInputs>({
     defaultValues: {
-      firstName: '',
-      lastName: '',
+      first_name: '',
+      last_name: '',
       username: '',
       email: '',
       password: '',
@@ -49,7 +50,7 @@ export default function App() {
       const checkUsername = async () => {
         try {
           // Construct the API URL with the username
-          const response = await fetch(`http://localhost:8000/api/users/check_username/?username=${watchedUsername}`);
+          const response = await fetch(`http://localhost:8000/api/users/check_username?username=${watchedUsername}`);
           if (!response.ok) {
             // Handle HTTP errors, e.g., 404, 500
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -68,7 +69,7 @@ export default function App() {
           }
         } catch (error) {
           console.error('Error checking username:', error);
-          setUsernameMessage({ text: 'Could not check username. Please try again.', color: 'text-yellow-500' });
+          setUsernameMessage({ text: 'Could not check username. Please try again. (CORS error likely)', color: 'text-yellow-500' });
           setUsernameAvailability(null);
         } finally {
           setIsCheckingUsername(false);
@@ -85,11 +86,49 @@ export default function App() {
     }
   }, [watchedUsername]);
 
-  const onSubmit = (data: SignupFormInputs) => {
+  const onSubmit = async (data: SignupFormInputs) => {
     // Only proceed with signup if username is available and not being checked
     if (!isCheckingUsername && usernameAvailability) {
-      console.log('Signup Data:', data);
-      setMessage(`Attempting to sign up with: First Name: ${data.firstName}, Last Name: ${data.lastName}, Username: ${data.username}, Email: ${data.email}, and Password: ${data.password}`);
+      setIsSubmitting(true);
+      setMessage(null);
+      
+      try {
+        const response = await fetch('http://localhost:8000/api/users/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          const responseData = await response.json();
+          console.log('Signup successful:', responseData);
+          setMessage(`User created successfully! Welcome, ${data.first_name}.`);
+          // Clear all fields on successful submission
+          reset();
+        } else {
+          // Handle API errors from the server
+          const errorData = await response.json();
+          console.error('Signup failed:', errorData);
+          setMessage(`Error: ${errorData.message || 'Signup failed. Please try again.'}`);
+          // Clear only the password field on failure
+          reset({
+            ...data,
+            password: '',
+          });
+        }
+      } catch (error) {
+        console.error('Network error during signup:', error);
+        setMessage('A network error occurred. Please check your connection and try again.');
+        // Clear only the password field on network error
+        reset({
+          ...data,
+          password: '',
+        });
+      } finally {
+        setIsSubmitting(false);
+      }
     } else {
       setMessage('Please enter a valid and available username.');
     }
@@ -105,8 +144,22 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4 sm:p-6 md:p-8 font-sans">
-      <Card className="w-full max-w-sm bg-gray-900 text-white rounded-xl shadow-lg border-gray-700">
+    // Updated main background to a slightly darker shade
+    <div className="min-h-screen bg-gray-950 flex items-center justify-center p-4 sm:p-6 md:p-8 font-sans">
+      <style>
+        {`
+          /* CSS to prevent browser autofill from changing the background color */
+          input:-webkit-autofill,
+          input:-webkit-autofill:hover,
+          input:-webkit-autofill:focus,
+          input:-webkit-autofill:active {
+            -webkit-text-fill-color: #f8f9fa; /* Lighter text color */
+            -webkit-box-shadow: 0 0 0px 1000px #1f2937 inset; /* Gray-800 color */
+            transition: background-color 5000s ease-in-out 0s;
+          }
+        `}
+      </style>
+      <Card className="w-full max-w-sm bg-gray-900 text-white rounded-xl shadow-lg border-gray-800">
         <CardHeader className="text-center">
           <CardTitle className="text-3xl font-bold text-white">Create an Account</CardTitle>
           <CardDescription className="text-gray-400">
@@ -118,14 +171,14 @@ export default function App() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="firstName" className="text-gray-300">First Name</Label>
+                <Label htmlFor="first_name" className="text-gray-300">First Name</Label>
                 <Controller<SignupFormInputs>
-                  name="firstName"
+                  name="first_name"
                   control={control}
                   rules={{ required: 'First name is required' }}
                   render={({ field }) => (
                     <Input
-                      id="firstName"
+                      id="first_name"
                       placeholder="John"
                       type="text"
                       className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:ring-blue-500 focus:border-blue-500"
@@ -133,19 +186,19 @@ export default function App() {
                     />
                   )}
                 />
-                {errors.firstName && (
-                  <p className="text-red-500 text-sm mt-1">{errors.firstName.message}</p>
+                {errors.first_name && (
+                  <p className="text-red-500 text-sm mt-1">{errors.first_name.message}</p>
                 )}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="lastName" className="text-gray-300">Last Name</Label>
+                <Label htmlFor="last_name" className="text-gray-300">Last Name</Label>
                 <Controller<SignupFormInputs>
-                  name="lastName"
+                  name="last_name"
                   control={control}
                   rules={{ required: 'Last name is required' }}
                   render={({ field }) => (
                     <Input
-                      id="lastName"
+                      id="last_name"
                       placeholder="Doe"
                       type="text"
                       className="bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:ring-blue-500 focus:border-blue-500"
@@ -153,8 +206,8 @@ export default function App() {
                     />
                   )}
                 />
-                {errors.lastName && (
-                  <p className="text-red-500 text-sm mt-1">{errors.lastName.message}</p>
+                {errors.last_name && (
+                  <p className="text-red-500 text-sm mt-1">{errors.last_name.message}</p>
                 )}
               </div>
             </div>
@@ -261,15 +314,15 @@ export default function App() {
 
             <Button
               type="submit"
-              disabled={isCheckingUsername || !usernameAvailability}
+              disabled={isCheckingUsername || !usernameAvailability || isSubmitting}
               className="w-full bg-[#FF3B30] hover:bg-[#ff3a30d8] text-white font-semibold py-2 rounded-md transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Sign Up
+              {isSubmitting ? 'Signing Up...' : 'Sign Up'}
             </Button>
           </form>
 
           {message && (
-            <p className="text-center text-sm mt-4 text-green-400">
+            <p className={`text-center text-sm mt-4 ${message.startsWith('Error') || message.startsWith('A network error') ? 'text-red-500' : 'text-green-400'}`}>
               {message}
             </p>
           )}
