@@ -10,6 +10,9 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
 import { AiOutlineGoogle, AiOutlineLock, AiOutlineUser, AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { api } from '@/lib/utils';
+import { handleLogin } from '@/lib/login';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 
 interface LoginFormInputs extends FieldValues {
@@ -18,10 +21,13 @@ interface LoginFormInputs extends FieldValues {
 }
 
 export default function App() {
+    const searchParams = useSearchParams(); 
+    const router = useRouter();
   const [message, setMessage] = useState<string | null>(null); 
   const [showPassword, setShowPassword] = useState<boolean>(false); 
 
- 
+   const redirectUrl = searchParams.get('redirect');
+
   const { control, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>({
     defaultValues: {
       username: '',
@@ -30,9 +36,21 @@ export default function App() {
   });
 
 
-  const onSubmit = (data: LoginFormInputs) => {
-    console.log('Login Data:', data);
-    setMessage(`Attempting to log in with username: ${data.username} and password: ${data.password}`);
+  const onSubmit = async (data: LoginFormInputs) => {
+   
+   const {isLogedIn} = await handleLogin(data.username,data.password)
+   if(isLogedIn){
+    setMessage(`Login successful`);
+    if(redirectUrl){
+      router.push(redirectUrl)
+    } else {
+      history.back()
+    }
+   }
+   else {
+    setMessage(`couldn't login`);
+   }
+    
   };
 
   const handleGoogleLogin = () => {
