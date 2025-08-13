@@ -44,7 +44,7 @@ export async function middleware(request: NextRequest) {
           newResponse.cookies.set('access_token', access, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            sameSite: 'lax',
             path: '/',
             maxAge: 60 * 15, 
           });
@@ -93,15 +93,15 @@ export async function middleware(request: NextRequest) {
               const newResponse = NextResponse.next();
               newResponse.cookies.set('access_token', access, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
+                secure: false,
                 sameSite: 'strict',
                 path: '/',
                 maxAge: 60 * 15, 
               });
               newResponse.cookies.set('refresh_token', refresh, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
+                secure: false,
+                sameSite: 'lax',
                 path: '/',
                 maxAge: 60 * 60 * 24 * 7, 
               });
