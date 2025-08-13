@@ -1,11 +1,20 @@
+  "use client"
 import MusicCard from '@/app/components/MusicCard'
 import PageWraper from '@/app/components/PageWraper'
 import Scroller from '@/app/components/Scroller'
 import { Button } from '@/components/ui/button'
+import { api } from '@/lib/utils'
 import Image from 'next/image'
 import { HiPlus } from 'react-icons/hi'
 
-function page() {
+ function page() {
+const fetchUserProfile = async () => {
+
+  const response = await api.get('/profiles/')
+  const data =  response.data;
+  console.log(data)
+}; 
+fetchUserProfile()
     const userType = "artist"
   return (
     <PageWraper>

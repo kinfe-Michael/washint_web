@@ -15,16 +15,16 @@ export const handleLogin = async (username:string, password:string) => {
  
 (await cookies()).set('access_token', access, {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production', // Set to true for production
-  sameSite: 'strict',
+  secure: false, // Set to true for production
+  sameSite: 'lax',
   path: '/',
   maxAge: 60 * 15, // Expires in 15 minutes
 });
 
 (await cookies()).set('refresh_token', refresh, {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production', // Set to true for production
-  sameSite: 'strict',
+  secure: false, // Set to true for production
+  sameSite: 'lax',
   path: '/',
   maxAge: 60 * 60 * 24 * 7, // Expires in 7 days
 });
