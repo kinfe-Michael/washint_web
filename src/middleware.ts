@@ -6,7 +6,7 @@ import * as jose from 'jose';
 const API_BASE_URL = 'http://localhost:8000';
 
 export async function middleware(request: NextRequest) {
-  const protectedRoutes = ['/profile', '/settings'];
+  const protectedRoutes = ['/profile/my-profile', '/settings'];
 
   const isProtectedRoute = protectedRoutes.includes(request.nextUrl.pathname);
 
