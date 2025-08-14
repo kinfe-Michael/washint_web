@@ -10,9 +10,9 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
 import { AiOutlineGoogle, AiOutlineLock, AiOutlineUser, AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { api } from '@/lib/utils';
 import { handleLogin } from '@/lib/login';
 import { useRouter, useSearchParams } from 'next/navigation';
+import useUserState from '@/store/useUserState';
 
 
 interface LoginFormInputs extends FieldValues {
@@ -25,7 +25,7 @@ export default function App() {
     const router = useRouter();
   const [message, setMessage] = useState<string | null>(null); 
   const [showPassword, setShowPassword] = useState<boolean>(false); 
-
+const {fetchData} = useUserState()
    const redirectUrl = searchParams.get('redirect');
 
   const { control, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>({
@@ -43,6 +43,7 @@ export default function App() {
     setMessage(`Login successful`);
     if(redirectUrl){
       router.push(redirectUrl)
+      fetchData()
     } else {
       history.back()
     }

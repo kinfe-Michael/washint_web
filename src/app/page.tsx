@@ -3,6 +3,7 @@ import PageWraper from "./components/PageWraper";
 import Scroller from "./components/Scroller";
 
 export default function Home() {
+
   return (
     <PageWraper>
       <Scroller title="favorite" routeTo="">

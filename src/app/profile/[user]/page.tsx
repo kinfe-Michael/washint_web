@@ -8,13 +8,7 @@ import Image from 'next/image'
 import { HiPlus } from 'react-icons/hi'
 
  function page() {
-const fetchUserProfile = async () => {
 
-  const response = await api.get('/profiles/')
-  const data =  response.data;
-  console.log(data)
-}; 
-fetchUserProfile()
     const userType = "artist"
   return (
     <PageWraper>

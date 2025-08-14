@@ -9,11 +9,16 @@ import { HiSparkles } from "react-icons/hi";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import PhoneSidebar from "./PhoneSidebar";
 import { SearchResultsOverlay } from "./SearchResultsOverlay";
+import useUserState from "@/store/useUserState";
 function Header() {
   const [searchTerm, setSearchTerm] = useState<string>(""); 
   const searchInputRef = useRef<HTMLInputElement>(null); 
   const searchContainerRef = useRef<HTMLDivElement>(null); 
   const isSearchBarActive = useWashintStore((state)=> state.isSearchBarOpen)
+    const {fetchData,data} = useUserState()
+  useEffect(()=>{
+    fetchData()
+  },[])
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) { 
       if (
@@ -78,16 +83,21 @@ function Header() {
         )}
       </div>
       <div className="flex flex-grow items-center justify-end gap-2">
-       <NavLink href={"/auth/login"}>
-        <Button className="px-2 text-xs hidden md:block font-bold">Login</Button>
+      { data.username === '' && 
+     ( <><NavLink href={"/auth/login"}>
+          <Button className="px-2 text-xs hidden md:block font-bold">Login</Button>
 
-       </NavLink>
-       <NavLink href={"/auth/signup"}>
-        <Button className="bg-[#FF3B30] text-xs px-1 hover:bg-[#ff3a30d8] font-bold">
-          Sign up
-        </Button>
-       </NavLink>
-       
+        </NavLink><NavLink href={"/auth/signup"}>
+            <Button className="bg-[#FF3B30] text-xs px-1 hover:bg-[#ff3a30d8] font-bold">
+              Sign up
+            </Button>
+          </NavLink></> ) 
+      }
+      {
+        data.username != '' && <div>
+          <h1>{data.username}</h1>
+        </div>
+      }
         <PhoneSidebar />
       </div>
     </header>
