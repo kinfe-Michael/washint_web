@@ -1,8 +1,9 @@
 import Image from "next/image"
+import NavLink from "./CustomNavLink"
 
-function ArtistCard({imageurl,artistName}:{imageurl:string,artistName:string}) {
+function ArtistCard({imageurl,artistName,username}:{imageurl:string,artistName:string,username:string}) {
   return (
-       <div
+       <NavLink href={`/profile/${username}`}
          className="
          
            text-white lg:p-2
@@ -26,7 +27,7 @@ function ArtistCard({imageurl,artistName}:{imageurl:string,artistName:string}) {
              {artistName}
            </h1>
          </div>
-       </div>
+       </NavLink>
   )
 }
 

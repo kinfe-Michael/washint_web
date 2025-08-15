@@ -1,6 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import Cookies from 'js-cookie';
 import axios from 'axios'
 
 
@@ -14,6 +13,7 @@ export function capitalizeFirstLetter(str:string) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
+
 export const api = axios.create({
   baseURL: 'http://localhost:8000/api/',
   withCredentials:true,
@@ -21,3 +21,4 @@ export const api = axios.create({
     'Content-Type': 'application/json',
   },
 })
+
