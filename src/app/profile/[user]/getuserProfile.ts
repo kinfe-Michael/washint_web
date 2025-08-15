@@ -13,7 +13,7 @@ const cookieStore = await cookies()
       Cookie:cookieStore.toString()
     }
   })
-  return response.data
+  return {profile:response.data}
   }
   else {
   const response = await axios.get(`http://localhost:8000/api/profiles/user_profile/?username=${user}`,{

@@ -5,7 +5,7 @@ import { closeSearchBar, openSearchBar } from "@/lib/searchStateOperation";
 import useWashintStore from "@/store/useWashintStore";
 import NavLink  from "./CustomNavLink";
 import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react"; // Import React specific types
-import { HiSparkles } from "react-icons/hi";
+import { HiSparkles, HiUser } from "react-icons/hi";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import PhoneSidebar from "./PhoneSidebar";
 import { SearchResultsOverlay } from "./SearchResultsOverlay";
@@ -95,7 +95,9 @@ function Header() {
       }
       {
         data.username != '' && <div>
-          <h1>{data.username}</h1>
+          <NavLink className=" hover:bg-gray-800 rounded-full text-3xl flex items-center" href={'/profile/my-profile'}>
+          <HiUser className="  rounded-full "/>
+          </NavLink>
         </div>
       }
         <PhoneSidebar />
