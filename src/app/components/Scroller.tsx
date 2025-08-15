@@ -6,7 +6,7 @@ import NavLink from "./CustomNavLink";
 function Scroller({ title, children,routeTo }: { title: string; children: ReactNode,routeTo:string }) {
   return (
     <div className="max-w-dvw flex flex-col">
-      <div className=" flex justify-between items-center mr-10 lg:mr-70 max-w-dvw">
+      <div className=" flex justify-between items-center mr-10  max-w-dvw">
          <h1 className="text-base font-bold">{capitalizeFirstLetter(title)}</h1>
          <NavLink href={routeTo}>
         <h3 className="hover:underline text-xs cursor-pointer">Show all</h3>
