@@ -11,7 +11,10 @@ interface PageProps {
 }
 async function page({ params }: PageProps) {
   const { user } = await params;
-  const { profile }: UserProfile = await getUserProfile(user);
+  const { profile,isNew }: {profile:UserProfile,isNew:boolean | undefined}= await getUserProfile(user);
+  if(isNew){
+    console.log('new user alert')
+  }
   const userType = "artist";
   if (!profile) {
     return <div className="text-black">Loading</div>;
@@ -32,10 +35,10 @@ async function page({ params }: PageProps) {
             />
             <div className="flex gap-1">
               {user != 'my-profile' && <Button>Follow</Button>}
-              {user == 'my-profile' && <Button>Edit</Button>}
-              <Button>
+              {user == 'my-profile' && <Button>Edit Profile</Button>}
+             {user != 'my-profile' && <Button>
                 <HiBell />
-              </Button>
+              </Button>}
             </div>
           </div>
 
@@ -48,7 +51,7 @@ async function page({ params }: PageProps) {
 
           {profile.bio && profile.bio != '' && (
             <div className="max-w-3xl  text-sm p-4">
-              <h1 className="text-lg">Biography</h1>
+              <h1 className="text-lg">Bio</h1>
               <p className="text-gray-400">
              {profile.bio}
               </p>

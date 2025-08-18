@@ -1,5 +1,5 @@
 export type UserProfile = {
-  profile: {
+ 
     id: string;
     username: string;
     display_name: string;
@@ -10,4 +10,3 @@ export type UserProfile = {
     created_at: string;
     updated_at: string;
   };
-};
