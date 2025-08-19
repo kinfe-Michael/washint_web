@@ -1,11 +1,11 @@
-import NavLink from "../components/CustomNavLink"
 import PageWraper from "../components/PageWraper"
+import SettingButtons from "./components/SettingButtons"
 
 function page() {
   return (
     <PageWraper>
-        <div>settings</div>
-        <NavLink href="/settings/artistDashbord">Artist Dashbord</NavLink>
+        <h1 className="text-xl ml-4 font-bold">settings</h1>
+        <SettingButtons text="Artist Dashbord" url="/settings/artistDashbord"/>
     </PageWraper>
   )
 }

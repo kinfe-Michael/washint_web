@@ -8,9 +8,8 @@ function page() {
     const [isArtist,setIsArtist] = useState(false)
 useEffect(()=>{
     api.get('/artists/').then(r => {
-        if(r.data[0]){
+        if(r.data.results[0]){
             setIsArtist(true)
-            console.log(r.data)
         }
         else setIsArtist(false)
     }).catch(e => console.log(e))
