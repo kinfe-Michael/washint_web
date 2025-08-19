@@ -1,23 +1,23 @@
 import PageWraper from "../components/PageWraper";
+import Artists from "./components/Artists";
 import { PlaylistFolder } from "./components/Folder";
 
 interface PageProps {
   params: Promise<{ pageTitle: string }>; // For a single dynamic segment
 }
 
-const componentTorender = [1,2,3,4].map((i)=>{
-   return <PlaylistFolder
-          key={i}
-            folderName="Classical Masterpieces"
-            count={12}
-            imageUrl="/yohana.jpg"
-            className="col-span-2 sm:col-span-1"
-          />
-})
+
 
 
 async function page({ params }: PageProps) {
   const { pageTitle } = await params;
+  let componentTorender
+  if(pageTitle == 'artists'){
+     componentTorender = <Artists/>
+  }
+  else{
+    componentTorender = <p>No pages found!</p>
+  }
   return (
     <PageWraper>
       <div className="text-white flex flex-col items-start">
