@@ -5,7 +5,7 @@ function page() {
   return (
     <PageWraper>
         <h1 className="text-xl ml-4 font-bold">settings</h1>
-        <SettingButtons text="Artist Dashbord" url="/settings/artistDashbord"/>
+        <SettingButtons text="Artist Dashbord" url="/settings/artistDashboard"/>
     </PageWraper>
   )
 }
