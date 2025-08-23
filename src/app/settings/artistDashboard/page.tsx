@@ -7,6 +7,7 @@ import ArtistDashboard from "./components/Dashboard";
 
 function page() {
   const [isArtist, setIsArtist] = useState(false);
+  const [ShowBecomeArtist, setShowBecomeArtist] = useState(false);
   useEffect(() => {
     api
       .get("/artists/")
@@ -14,13 +15,16 @@ function page() {
         if (r.data.results[0]) {
           setIsArtist(true);
         } else setIsArtist(false);
+        setShowBecomeArtist(true)
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        setShowBecomeArtist(false)
+      });
   }, []);
   return (
     <PageWraper>
       {isArtist && <ArtistDashboard/>}
-      {!isArtist && (
+      {!isArtist && ShowBecomeArtist && (
         <Button
           onClick={() => {
             api
