@@ -9,13 +9,12 @@ import {
   CheckCircle,
   ChevronLeft,
   X,
+  Image as ImageIcon,
 } from 'lucide-react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
-// Use a CSS variable for the primary color for easy reuse.
 const primaryColor = '#f4511e';
 
-// --- TYPE DEFINITIONS AND MOCK DATA ---
 interface Album {
   id: string;
   title: string;
@@ -31,6 +30,7 @@ interface SongFormData {
   title: string;
   albumId: string;
   audio_file_upload: File | null;
+  song_cover_upload: File | null;
   credits: CreditEntry[];
 }
 
@@ -38,10 +38,10 @@ interface FormErrors {
   title?: string;
   albumId?: string;
   audio_file_upload?: string;
+  song_cover_upload?: string;
   credits?: string;
 }
 
-// Defining props interfaces for the reusable components
 interface FormInputProps {
   id: string;
   label: string;
@@ -61,6 +61,14 @@ interface FormSelectProps {
   error?: string;
 }
 
+interface FormImageUploadProps {
+  id: string;
+  label: string;
+  file: File | null;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
+}
+
 const mockAlbums: Album[] = [
   { id: 'album-1', title: 'Starlight Symphony', artistId: 'artist-1' },
   { id: 'album-2', title: 'Urban Serenade', artistId: 'artist-1' },
@@ -71,7 +79,6 @@ const mockAlbums: Album[] = [
 
 const commonRoles = ['Writer', 'Producer', 'Engineer', 'Musician', 'Mixer', 'Artist', 'Composer', 'Feat. Artist'];
 
-// --- REUSABLE COMPONENTS WITH EXPLICIT TYPES ---
 const FormInput: React.FC<FormInputProps> = ({ id, label, type = 'text', value, onChange, placeholder, error }) => (
   <div className="mb-6">
     <label htmlFor={id} className="block text-zinc-400 text-sm font-semibold mb-2">
@@ -121,11 +128,56 @@ const FormSelect: React.FC<FormSelectProps> = ({ id, label, value, onChange, opt
   </div>
 );
 
+const FormImageUpload: React.FC<FormImageUploadProps> = ({ id, label, file, onChange, error }) => {
+  const [preview, setPreview] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (file) {
+      const objectUrl = URL.createObjectURL(file);
+      setPreview(objectUrl);
+
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+    setPreview(null);
+  }, [file]);
+
+  return (
+    <div className="mb-6">
+      <label htmlFor={id} className="block text-zinc-400 text-sm font-semibold mb-2">
+        {label}
+      </label>
+      <div className={`relative w-36 h-36 rounded-lg overflow-hidden border-2 transition-colors duration-200 ${error ? 'border-red-500' : 'border-zinc-700 focus-within:border-white'}`}>
+        <label htmlFor={id} className="cursor-pointer w-full h-full flex flex-col items-center justify-center p-2 text-zinc-400 hover:text-white transition-colors">
+          {preview ? (
+            <img src={preview} alt="Song Cover Preview" className="absolute inset-0 w-full h-full object-cover" />
+          ) : (
+            <div className="flex flex-col items-center justify-center">
+              <ImageIcon className="w-8 h-8" />
+              <span className="mt-2 text-center text-sm">Upload Cover</span>
+            </div>
+          )}
+        </label>
+        <input
+          type="file"
+          id={id}
+          name={id}
+          accept="image/*"
+          onChange={onChange}
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+        />
+      </div>
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+    </div>
+  );
+};
+
+
 const App: React.FC = () => {
   const [formData, setFormData] = useState<SongFormData>({
     title: '',
     albumId: '',
     audio_file_upload: null,
+    song_cover_upload: null, 
     credits: [],
   });
 
@@ -133,7 +185,6 @@ const App: React.FC = () => {
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
   const [validationErrors, setValidationErrors] = useState<FormErrors>({});
   
-  // Mocking an artistId for filtering
   const artistId = 'artist-1';
 
   const filteredAlbums: Album[] = artistId
@@ -153,19 +204,19 @@ const App: React.FC = () => {
   };
   
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
+    const { name, files } = e.target;
+    const file = files ? files[0] : null;
     setFormData((prevData) => ({
       ...prevData,
-      audio_file_upload: file,
+      [name]: file,
     }));
     setValidationErrors((prevErrors) => ({
       ...prevErrors,
-      audio_file_upload: undefined,
+      [name]: undefined,
     }));
   };
 
   const handleAddCredit = () => {
-    // Add a new credit with an empty role to allow for custom input
     setFormData((prevData) => ({
       ...prevData,
       credits: [...prevData.credits, { role: '', name: '' }],
@@ -195,6 +246,7 @@ const App: React.FC = () => {
     const errors: FormErrors = {};
     if (!formData.title) errors.title = 'Title is required.';
     if (!formData.audio_file_upload) errors.audio_file_upload = 'Audio file is required.';
+    if (!formData.song_cover_upload) errors.song_cover_upload = 'Song cover is required.';
     
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
@@ -212,7 +264,6 @@ const App: React.FC = () => {
     setSubmitStatus(null);
     setValidationErrors({});
     
-    // Filter out credits with empty names before submission
     const filteredCredits = formData.credits.filter(
       (credit) => credit.name.trim() !== ''
     );
@@ -228,8 +279,11 @@ const App: React.FC = () => {
     if (formData.audio_file_upload) {
         formPayload.append('audio_file_upload', formData.audio_file_upload);
     }
+
+    if (formData.song_cover_upload) {
+        formPayload.append('song_cover_upload', formData.song_cover_upload);
+    }
    
-    const authToken = 'YOUR_AUTH_TOKEN'; // Use a real auth token in a production environment
     
     try {
       const response: AxiosResponse = await axios.post('http://localhost:8000/api/songs/', formPayload, {
@@ -242,6 +296,7 @@ const App: React.FC = () => {
         title: '',
         albumId: '',
         audio_file_upload: null,
+        song_cover_upload: null,
         credits: [],
       });
       
@@ -262,7 +317,6 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-zinc-950 p-4 md:p-8 font-sans antialiased text-zinc-200">
       <div className="max-w-3xl mx-auto bg-zinc-900 rounded-xl p-6 md:p-10 shadow-lg border border-zinc-800">
         
-        {/* --- Header and Back Button --- */}
         <div className="flex items-center gap-4 mb-8">
           <button
             onClick={() => window.history.back()}
@@ -277,7 +331,6 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* --- Form Status Message --- */}
         {submitStatus === 'success' && (
           <div className="flex items-center gap-3 p-4 mb-6 rounded-lg bg-green-900 text-green-300">
             <CheckCircle className="w-5 h-5" />
@@ -291,7 +344,6 @@ const App: React.FC = () => {
           </div>
         )}
 
-        {/* --- Main Form --- */}
         <form onSubmit={handleSubmit}>
           
           <FormInput
@@ -312,6 +364,14 @@ const App: React.FC = () => {
             error={validationErrors.albumId}
           />
           
+          <FormImageUpload
+            id="song_cover_upload"
+            label="Song Cover"
+            file={formData.song_cover_upload}
+            onChange={handleFileChange}
+            error={validationErrors.song_cover_upload}
+          />
+
           <div className="mb-6">
             <label htmlFor="audio_file_upload" className="block text-zinc-400 text-sm font-semibold mb-2">
               Audio File
@@ -335,7 +395,6 @@ const App: React.FC = () => {
             {validationErrors.audio_file_upload && <p className="text-red-500 text-sm mt-1">{validationErrors.audio_file_upload}</p>}
           </div>
 
-          {/* --- Credits Section --- */}
           <div className="mb-6">
             <div className="flex justify-between items-center mb-2">
               <label className="block text-zinc-400 text-sm font-semibold">
@@ -369,7 +428,6 @@ const App: React.FC = () => {
                     <X className="w-5 h-5 text-red-400" />
                   </button>
                 </div>
-                {/* Common roles as buttons */}
                 <div className="flex flex-wrap gap-2 mb-2">
                   {commonRoles.map(role => (
                     <button
@@ -399,7 +457,6 @@ const App: React.FC = () => {
             )}
           </div>
           
-          {/* --- Submit Button --- */}
           <button
             type="submit"
             className="flex items-center justify-center gap-3 w-full p-3 rounded-lg font-bold text-white transition-all duration-300 transform"
