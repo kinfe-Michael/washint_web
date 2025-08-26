@@ -12,7 +12,9 @@ export async function middleware(request: NextRequest) {
 
   const accessToken = request.cookies.get('access_token');
   const refreshToken = request.cookies.get('refresh_token');
-
+ console.log("request.cookies")
+ console.log(accessToken)
+ console.log("request.cookies")
   const response = NextResponse.next();
   
   response.headers.set('x-middleware-cache', 'no-cache');
