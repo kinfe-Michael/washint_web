@@ -1,141 +1,33 @@
-import MusicCard from "../components/MusicCard";
 import PageWraper from "../components/PageWraper";
-import Scroller from "../components/Scroller";
+import InfiniteScroller from "./InfiniteScroller";
+import { SongsApiResponse } from "../../lib/type";
 
-function page() {
+// This is a Server Component, so no "use client" directive here.
+// It can be an async function to fetch data directly.
+export default async function Page() {
+  let songsData: SongsApiResponse | null = null;
+  let error: string | null = null;
+
+  try {
+    const response = await fetch("http://localhost:8000/api/songs/");
+    if (!response.ok) {
+      throw new Error("Failed to fetch initial songs");
+    }
+    songsData = await response.json();
+  } catch (err: any) {
+    error = err.message;
+  }
+
   return (
     <PageWraper>
-
-      <Scroller title="Top" routeTo="">
-          <MusicCard
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
+      {error ? (
+        <div>Error: {error}</div>
+      ) : (
+        <InfiniteScroller
+          initialSongs={songsData?.results || []}
+          initialNextPageUrl={songsData?.next || null}
         />
-           <MusicCard
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-         <MusicCard
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-         <MusicCard
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-           <MusicCard 
-         imageUrl="/yohana.jpg"
-         musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-      </Scroller>
+      )}
     </PageWraper>
   );
 }
-
-export default page;

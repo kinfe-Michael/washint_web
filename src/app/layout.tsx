@@ -1,9 +1,7 @@
-// Corrected RootLayout.tsx
+import BottomContainer from "./components/BottomContainer";
 import Header from "./components/header";
 import ProgressBar from "./components/ProgressBar";
-// import Sidebar from "./components/sidebar"; // If you have a sidebar, integrate it later
 import "./globals.css";
-// import BottomContainer from "./components/BottomContainer"; // If you have a fixed footer, integrate it later
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"; // Still needed for your Scroller component, but not necessarily this root layout's structure
 
 export const metadata = {
@@ -30,6 +28,7 @@ export default function RootLayout({
           </div>
         </div>
         <ProgressBar/>
+        <BottomContainer/>
       </body>
     </html>
   );
