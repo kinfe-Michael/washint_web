@@ -12,22 +12,22 @@ export const handleLogin = async (username:string, password:string) => {
 
     const { access, refresh } = response.data;
     
- 
+ (await cookies()).set('refresh_token', refresh, {
+  httpOnly: true,
+  secure: false, 
+  sameSite: 'lax',
+  path: '/',
+  maxAge: 60 * 60 * 24 * 7, 
+});
 (await cookies()).set('access_token', access, {
   httpOnly: true,
-  secure: false, // Set to true for production
+  secure: false, 
   sameSite: 'lax',
   path: '/',
-  maxAge: 60 * 15, // Expires in 15 minutes
+  maxAge: 60 * 15, 
 });
 
-(await cookies()).set('refresh_token', refresh, {
-  httpOnly: true,
-  secure: false, // Set to true for production
-  sameSite: 'lax',
-  path: '/',
-  maxAge: 60 * 60 * 24 * 7, // Expires in 7 days
-});
+
 
  
     return {isLogedIn:true}

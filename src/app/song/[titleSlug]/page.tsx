@@ -20,7 +20,10 @@ export default async function MusicDetailPage( {params} : PageProps) {
   const music = await fetchMusicBySlug(titleSlug);
 
   if (!music) {
-    notFound(); // Renders Next.js's default 404 page if music is not found
+    return <PageWraper>
+      <div>loading</div>
+    </PageWraper>
+    // notFound(); // Renders Next.js's default 404 page if music is not found
   }
 
   // Fetch other music by the same artist

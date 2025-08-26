@@ -10,3 +10,25 @@ export type UserProfile = {
     created_at: string;
     updated_at: string;
   };
+
+
+export interface Song {
+  id: string;
+  title: string;
+  album: string | null;
+  genres: string[];
+  signed_audio_url: string;
+  signed_cover_url: string;
+  credits: string | null;
+  duration_seconds: number;
+  artist: string; // Note: This is an artist ID. You may need to fetch the artist's name separately.
+  play_count: number;
+  created_at: string;
+}
+
+export interface SongsApiResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Song[];
+}

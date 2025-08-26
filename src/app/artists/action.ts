@@ -2,7 +2,7 @@
 
 'use server';
 
-export async function getArtists(limit: number, offset: number) {
+export async function getArtists(offset?: number,limit: number = 20) {
   const response = await fetch(
     `http://127.0.0.1:8000/api/public-artists/?limit=${limit}&offset=${offset}`
   );
