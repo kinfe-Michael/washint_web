@@ -242,10 +242,10 @@ if(!currentTrack) return
       `}</style>
 
       {/* HTML5 Audio Element */}
-      {currentTrack?.url && (
+      {currentTrack?.signed_audio_url && (
         <audio
           ref={mediaRef}
-          src={currentTrack.url}
+          src={currentTrack.signed_audio_url}
           onLoadedMetadata={handleLoadedMetadata}
           onTimeUpdate={handleTimeUpdate}
           onEnded={handleAudioEnded}
@@ -285,7 +285,7 @@ if(!currentTrack) return
             <Image
             layout="fill"
               className="rounded-lg object-cover w-full h-full"
-              src={currentTrack?.imageUrl || "https://placehold.co/64x64/FF3B30/FFFFFF?text=Music"} 
+              src={currentTrack?.signed_cover_url || "https://placehold.co/64x64/FF3B30/FFFFFF?text=Music"} 
               alt={currentTrack?.title || "Album Art"}
               onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
                 e.currentTarget.src = "https://placehold.co/64x64/FF3B30/FFFFFF?text=Music"; // Fallback image on error
@@ -298,7 +298,7 @@ if(!currentTrack) return
               {currentTrack?.title || "Unknown Title"}
             </h1>
             <h1 className="text-xs text-gray-400 line-clamp-1">
-              {currentTrack?.artist || "Unknown Artist"}
+              {currentTrack?.artist.display_name || "Unknown Artist"}
             </h1>
             <div className="text-xs text-gray-400 mt-0.5">
               <span>{formatTime(played)}</span> / <span>{formatTime(duration)}</span>

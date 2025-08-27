@@ -64,11 +64,7 @@ export default function InfiniteScroller({ initialSongs, initialNextPageUrl }: I
         {songs.map((song) => (
           <MusicCard
             key={song.id}
-            imageUrl={song.signed_cover_url}
-            musicUrl={song.signed_audio_url}
-            alt={song.title}
-            title={song.title}
-            artist={song.artist}
+            song={song}
           />
         ))}
         {loading && <p>Loading more songs...</p>}

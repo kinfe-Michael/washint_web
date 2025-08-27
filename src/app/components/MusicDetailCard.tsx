@@ -3,9 +3,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
 import React from 'react';
-import { Music } from '../data/music';
+import type {Song} from '../../lib/type'
 interface MusicDetailCardProps {
-  music: Music;
+  music: Song;
 }
 
 export const MusicDetailCard: React.FC<MusicDetailCardProps> = ({ music }) => {
@@ -13,7 +13,7 @@ export const MusicDetailCard: React.FC<MusicDetailCardProps> = ({ music }) => {
     <Card className="w-full bg-black text-white border-gray-900 rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row items-center p-0 md:p-6 mb-8">
       <div className="relative w-64 h-64 flex-shrink-0 rounded-md overflow-hidden mr-0 md:mr-6 mb-4 md:mb-0">
         <Image
-          src={music.coverImage}
+          src={music.signed_cover_url}
           alt={`Cover of ${music.title}`}
           layout="fill"
           objectFit="cover"
@@ -26,14 +26,14 @@ export const MusicDetailCard: React.FC<MusicDetailCardProps> = ({ music }) => {
             {music.title}
           </CardTitle>
           <CardDescription className="text-xl sm:text-2xl text-gray-300 mt-1">
-            {music.artist}
+            {music.artist.display_name}
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0 text-sm text-gray-400 space-y-2">
           <p><strong>Album:</strong> {music.album}</p>
-          <p><strong>Genre:</strong> {music.genre}</p>
-          <p><strong>Duration:</strong> {music.duration}</p>
-          <p><strong>Released:</strong> {music.releaseYear}</p>
+          <p><strong>Genre:</strong> {music.genres}</p>
+          <p><strong>Duration:</strong> {music.duration_seconds}</p>
+          <p><strong>Released:</strong> {music.created_at}</p>
         </CardContent>
       </div>
     </Card>
