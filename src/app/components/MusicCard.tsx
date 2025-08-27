@@ -5,35 +5,16 @@ import Image from "next/image";
 import { useState } from "react";
 import NavLink from "./CustomNavLink";
 import { FaPlay } from "react-icons/fa";
+import { Song } from "@/lib/type";
 
-function MusicCard({
-  musicUrl,
-  imageUrl,
-  alt,
-  title,
-  artist,
-}: {
-  musicUrl: string;
-  imageUrl: string;
-  alt: string;
-  title: string;
-  artist: string;
-}) {
+function MusicCard({song}:{song:Song}) {
   const loadTrack = useWashintPlayer((state)=> state.loadTrack)
   const [hoverStyle,setHoverStyle] = useState("hidden")
   function handleClick(){
-    loadTrack({
-      url:musicUrl,
-      title,
-      artist,
-      imageUrl,
-      titleSlug:title,
-      artistSlug:artist,
-
-    })
+    loadTrack(song)
   }
   return (
-    <NavLink href={`/song/${title}`}
+    <NavLink href={`/song/${song.title}`}
     onClick={handleClick}
     onMouseOver={()=>setHoverStyle("flex")}
     onMouseLeave={()=>setHoverStyle("hidden")}
@@ -49,8 +30,8 @@ function MusicCard({
     >
       <div className="relative">
  <Image
-        src={imageUrl}
-        alt={alt}
+        src={song.signed_cover_url}
+        alt={song.artist.display_name}
         height={200}
         width={200}
         className="rounded-md"
@@ -62,9 +43,9 @@ function MusicCard({
       </div>
      
       <div className="p-4">
-        <h1 className="font-semibold text-sm md:text-base truncate">{title}</h1>
+        <h1 className="font-semibold text-sm md:text-base truncate">{song.title}</h1>
         <h1 className="text-xs md:text-sm font-light text-gray-400 truncate">
-          {artist}
+          {song.artist.display_name}
         </h1>
       </div>
      

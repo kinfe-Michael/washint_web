@@ -1,3 +1,4 @@
+import { Song } from "@/lib/type";
 import { create } from "zustand";
 
 interface WashintPlayerState {
@@ -11,14 +12,7 @@ interface WashintPlayerState {
   error: string | null;
 
   // Current track metadata
-  currentTrack: {
-    url: string; // URL of the currently playing song
-    artist: string;
-    title: string;
-    imageUrl: string;
-    titleSlug: string; // Used for URLs, etc.
-    artistSlug: string; // Used for URLs, etc.
-  } | null;
+  currentTrack: Song | null;
 
   // Playback queue/navigation
   nextSongId: string | null; // ID for next song (or URL, depending on how you manage your queue)
@@ -41,13 +35,22 @@ interface WashintPlayerState {
 
   // Actions for managing the current track
   loadTrack: (trackDetails: {
-    url: string;
-    artist: string;
-    title: string;
-    imageUrl: string;
-    titleSlug: string;
-    artistSlug: string;
-  }) => void;
+  id: string;
+  title: string;
+  album: string | null;
+  genres: string[] | null;
+  signed_audio_url: string;
+  signed_cover_url: string;
+  credits: string | null;
+  duration_seconds: number;
+  artist: {
+      display_name:string,
+      username:string,
+      id:string,
+    }; // Note: This is an artist ID. You may need to fetch the artist's name separately.
+  play_count: number;
+  created_at: string;
+}) => void;
   setNextSong: (nextSongId: string | null) => void;
   setPreviousSong: (previousSongId: string | null) => void;
 

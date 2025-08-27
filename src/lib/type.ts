@@ -16,12 +16,16 @@ export interface Song {
   id: string;
   title: string;
   album: string | null;
-  genres: string[];
+  genres: string[] | null;
   signed_audio_url: string;
   signed_cover_url: string;
   credits: string | null;
   duration_seconds: number;
-  artist: string; // Note: This is an artist ID. You may need to fetch the artist's name separately.
+  artist: {
+      display_name:string,
+      username:string,
+      id:string,
+    }; // Note: This is an artist ID. You may need to fetch the artist's name separately.
   play_count: number;
   created_at: string;
 }
