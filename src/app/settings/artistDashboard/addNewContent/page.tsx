@@ -3,6 +3,7 @@ import { useState } from 'react'
 import DashboardButton from '../components/DashboardButton'
 import AddSongForm from '../components/AddSong'
 import PageWraper from '@/app/components/PageWraper'
+import AlbumForm from '../../components/AddAlbum'
 
 function page() {
     const [showAddSongForm,setShowAddSongForm] = useState(false)
@@ -13,6 +14,10 @@ function page() {
         <div>
           <h1></h1>
             <AddSongForm/>
+        </div>
+        <div>
+          <h1></h1>
+          <AlbumForm/>
         </div>
     </PageWraper>
   )
