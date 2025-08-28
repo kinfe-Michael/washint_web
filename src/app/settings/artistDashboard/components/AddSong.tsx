@@ -30,7 +30,7 @@ interface SongFormData {
   title: string;
   albumId: string;
   audio_file_upload: File | null;
-  song_cover_upload: File | null;
+  song_cover_upload: File | null; 
   credits: CreditEntry[];
 }
 
