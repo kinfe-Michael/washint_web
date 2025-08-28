@@ -1,49 +1,33 @@
-import MusicCard from "./components/MusicCard";
-import PageWraper from "./components/PageWraper";
-import Scroller from "./components/Scroller";
 
-export default function Home() {
+
+import { SongsApiResponse } from "@/lib/type";
+import PageWraper from "./components/PageWraper";
+import InfiniteScroller from "./components/InfiniteScroller";
+
+export default async function Page() {
+  let songsData: SongsApiResponse | null = null;
+  let error: string | null = null;
+
+  try {
+    const response = await fetch("http://localhost:8000/api/songs/");
+    if (!response.ok) {
+      throw new Error("Failed to fetch initial songs");
+    }
+    songsData = await response.json();
+  } catch (err: any) {
+    error = err.message;
+  }
 
   return (
     <PageWraper>
-      <Scroller title="favorite" routeTo="">
-        <MusicCard
-        musicUrl="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-          imageUrl="/yohana.jpg"
-          alt="yohana"
-          title="hey-jude"
-          artist="Yohana"
+      {error ? (
+        <div>Error: {error}</div>
+      ) : (
+        <InfiniteScroller
+          initialSongs={songsData?.results || []}
+          initialNextPageUrl={songsData?.next || null}
         />
-         <MusicCard
-        musicUrl="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-          imageUrl="/yohana.jpg"
-          alt="yohana"
-          title="hey-jude"
-          artist="Yohana"
-        />
-         <MusicCard
-        musicUrl="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"
-          imageUrl="/yohana.jpg"
-          alt="yohana"
-          title="hey-jude"
-          artist="Yohana"
-        />
-         <MusicCard
-        musicUrl="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"
-          imageUrl="/yohana.jpg"
-          alt="yohana"
-          title="hey-jude"
-          artist="Yohana"
-        />
-         <MusicCard
-        musicUrl="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3"
-          imageUrl="/yohana.jpg"
-          alt="yohana"
-          title="hey-jude"
-          artist="Yohana"
-        />
-        
-      </Scroller>
+      )}
     </PageWraper>
   );
 }

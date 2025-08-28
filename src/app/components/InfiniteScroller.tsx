@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState, useRef, useCallback } from "react";
-import MusicCard from "../components/MusicCard";
-import Scroller from "../components/Scroller";
+import MusicCard from "./MusicCard";
+import Scroller from "./Scroller";
 import { SongsApiResponse, Song } from "../../lib/type"; // Import the types we created
 
 interface InfiniteScrollerProps {

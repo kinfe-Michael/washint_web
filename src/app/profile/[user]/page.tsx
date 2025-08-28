@@ -8,10 +8,13 @@ import { getUserProfile } from "./getuserProfile";
 import type { UserProfile } from "../../../lib/type";
 interface PageProps {
   params: Promise<{ user: string }>; // For a single dynamic segment
+  searchParams: Promise<{ type: string }>; // For a single dynamic segment
 }
-async function page({ params }: PageProps) {
+async function page({ params,searchParams }: PageProps) {
   const { user } = await params;
-  const { profile,isNew }: {profile:UserProfile,isNew:boolean | undefined}= await getUserProfile(user);
+  const { type } = await searchParams;
+  
+  const { profile,isNew }: {profile:UserProfile,isNew:boolean | undefined}= await getUserProfile(user,type);
   if(isNew){
     console.log('new user alert')
   }
@@ -61,7 +64,7 @@ async function page({ params }: PageProps) {
 
         <div></div>
       </div>
-      <Scroller routeTo="" title="My songs">
+      {/* <Scroller routeTo="" title="My songs">
         <MusicCard
           imageUrl="/yohana.jpg"
           musicUrl=""
@@ -69,7 +72,7 @@ async function page({ params }: PageProps) {
           title="Yetalesh"
           artist="Yohana"
         />
-      </Scroller>
+      </Scroller> */}
     </PageWraper>
   );
 }

@@ -1,5 +1,5 @@
 import PageWraper from "../components/PageWraper";
-import InfiniteScroller from "./InfiniteScroller";
+import InfiniteScroller from "../components/InfiniteScroller";
 import { SongsApiResponse } from "../../lib/type";
 
 // This is a Server Component, so no "use client" directive here.
