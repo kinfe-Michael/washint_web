@@ -7,7 +7,7 @@ import { MusicListItem } from '@/app/components/MusicListItem';
 import PageWraper from '@/app/components/PageWraper';
 import { SectionTitle } from '@/app/components/SectionTitle';
 import { notFound } from 'next/navigation'; // For handling 404 if music not found
-import { fetchMusicByArtist, fetchMusicBySlug, fetchRelatedMusic } from '../../data/music';
+import { fetchMusicByArtist, fetchRelatedMusic } from '../../data/music';
 import useWashintPlayer from '@/store/useWashintPlayer';
 
 

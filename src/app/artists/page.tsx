@@ -9,12 +9,11 @@ export default async function ArtistsPage({
 }: {
   searchParams: { limit?: string; offset?: string };
 }) {
-  const limit = parseInt(searchParams.limit || '10', 10);
   const offset = parseInt(searchParams.offset || '0', 10);
 
-  const initialArtists = await getArtists(limit, offset);
+  const initialArtists = await getArtists(offset);
 
   return <PageWraper>
-    <ArtistList initialArtists={initialArtists} limit={limit} />
+    <ArtistList initialArtists={initialArtists}/>
   </PageWraper>;
 }

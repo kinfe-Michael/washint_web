@@ -5,13 +5,19 @@ import Image from "next/image";
 import { useState } from "react";
 import NavLink from "./CustomNavLink";
 import { FaPlay } from "react-icons/fa";
-import { Song } from "@/lib/type";
+import type { Song } from "@/lib/type";
+import PageWraper from "./PageWraper";
 
 function MusicCard({song}:{song:Song}) {
   const loadTrack = useWashintPlayer((state)=> state.loadTrack)
   const [hoverStyle,setHoverStyle] = useState("hidden")
   function handleClick(){
     loadTrack(song)
+  }
+  if(!song) {
+    return <PageWraper>
+      <h1>Song not found</h1>
+    </PageWraper>
   }
   return (
     <NavLink href={`/song/${song.title}`}

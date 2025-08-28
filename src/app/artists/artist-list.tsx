@@ -6,10 +6,10 @@ import ArtistCard from '../components/ArtistCard';
 
 export default function ArtistList({
   initialArtists,
-  limit,
+
 }: {
   initialArtists: any;
-  limit: number;
+
 }) {
   const [artists, setArtists] = useState(initialArtists.results);
   const [offset, setOffset] = useState(initialArtists.results.length);
@@ -40,11 +40,12 @@ export default function ArtistList({
   }, [hasMore]);
 
   const loadMoreArtists = async () => {
-    const newArtistsData = await getArtists(limit, offset);
+    const newArtistsData = await getArtists(offset);
     setArtists((prev: any) => [...prev, ...newArtistsData.results]);
     setOffset((prev: any) => prev + newArtistsData.results.length);
     setHasMore(!!newArtistsData.next);
   };
+
 
   return (
     <div>
@@ -52,7 +53,7 @@ export default function ArtistList({
       <ul className='flex flex-wrap gap-4 justify-center items-center'>
         {artists.map((artist: any) => (
           <li key={artist.id}>
-            <ArtistCard  artistName={artist.managed_by.profile.display_name} username={artist.managed_by.profile.username} imageurl={artist.managed_by.profile.profile_picture_url} />
+            <ArtistCard  artistName={artist.display_name} id={artist.id} imageurl={artist.profile_picture_url} />
           </li>
         ))}
       </ul>
