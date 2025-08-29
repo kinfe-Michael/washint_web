@@ -1,6 +1,5 @@
 import PageWraper from "../components/PageWraper";
 import Artists from "./components/Artists";
-import { PlaylistFolder } from "./components/Folder";
 
 interface PageProps {
   params: Promise<{ pageTitle: string }>; // For a single dynamic segment

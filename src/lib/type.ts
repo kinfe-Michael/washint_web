@@ -36,3 +36,23 @@ export interface SongsApiResponse {
   previous: string | null;
   results: Song[];
 }
+// Add these new types to your lib/type.ts file
+export interface Artist {
+  id: string;
+  username: string;
+  display_name: string;
+}
+
+export interface Album {
+  id: string;
+  title: string;
+  artist: Artist;
+  signed_cover_art_url: string;
+}
+
+export interface AlbumsApiResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Album[];
+}
