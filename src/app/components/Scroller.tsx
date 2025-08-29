@@ -14,7 +14,7 @@ function Scroller({ title, children,routeTo }: { title: string; children: ReactN
       </div>
 
       <ScrollArea className=" overflow-y-auto w-full bg-black">
-        <div className="flex flex-nowrap space-x-4">{children}</div>
+        <div className="flex flex-wrap items-center justify-center gap-4 space-x-4">{children}</div>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
     </div>

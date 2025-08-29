@@ -15,10 +15,18 @@ import axios, { AxiosResponse, AxiosError } from 'axios';
 
 const primaryColor = '#f4511e';
 
+// Extend the Album interface to match your API response
 interface Album {
   id: string;
   title: string;
-  artistId: string;
+}
+
+// Interface for the API response structure
+interface AlbumsApiResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Album[];
 }
 
 interface CreditEntry {
@@ -59,6 +67,7 @@ interface FormSelectProps {
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   options: Album[];
   error?: string;
+  placeholder?: string;
 }
 
 interface FormImageUploadProps {
@@ -68,14 +77,6 @@ interface FormImageUploadProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   error?: string;
 }
-
-const mockAlbums: Album[] = [
-  { id: 'album-1', title: 'Starlight Symphony', artistId: 'artist-1' },
-  { id: 'album-2', title: 'Urban Serenade', artistId: 'artist-1' },
-  { id: 'album-3', title: 'The Great Outdoors', artistId: 'artist-1' },
-  { id: 'album-4', title: 'Retro Vibes', artistId: 'artist-2' },
-  { id: 'album-5', title: 'Jazz Nights', artistId: 'artist-3' },
-];
 
 const commonRoles = ['Writer', 'Producer', 'Engineer', 'Musician', 'Mixer', 'Artist', 'Composer', 'Feat. Artist'];
 
@@ -101,7 +102,7 @@ const FormInput: React.FC<FormInputProps> = ({ id, label, type = 'text', value, 
   </div>
 );
 
-const FormSelect: React.FC<FormSelectProps> = ({ id, label, value, onChange, options, error }) => (
+const FormSelect: React.FC<FormSelectProps> = ({ id, label, value, onChange, options, error, placeholder }) => (
   <div className="mb-6">
     <label htmlFor={id} className="block text-zinc-400 text-sm font-semibold mb-2">
       {label}
@@ -117,7 +118,7 @@ const FormSelect: React.FC<FormSelectProps> = ({ id, label, value, onChange, opt
         ${error ? 'border-red-500' : 'border-zinc-700 focus:border-white'}
       `}
     >
-      <option value="" disabled>Select a {label.toLowerCase()}</option>
+      <option value="" disabled>{placeholder}</option>
       {options.map((option) => (
         <option key={option.id} value={option.id}>
           {option.title}
@@ -185,11 +186,28 @@ const App: React.FC = () => {
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
   const [validationErrors, setValidationErrors] = useState<FormErrors>({});
   
-  const artistId = 'artist-1';
+  // New state for fetching albums
+  const [albums, setAlbums] = useState<Album[]>([]);
+  const [isAlbumsLoading, setIsAlbumsLoading] = useState<boolean>(true);
+  const [albumsError, setAlbumsError] = useState<string | null>(null);
 
-  const filteredAlbums: Album[] = artistId
-    ? mockAlbums.filter(album => album.artistId === artistId)
-    : [];
+  // UseEffect to fetch albums from the authenticated artist
+  useEffect(() => {
+    const fetchAlbums = async () => {
+      try {
+        const response: AxiosResponse<AlbumsApiResponse> = await axios.get('http://localhost:8000/api/albums/', {
+          withCredentials: true,
+        });
+        setAlbums(response.data.results);
+      } catch (error) {
+        console.error('Failed to fetch albums:', error);
+        setAlbumsError('Failed to load albums. Please try again later.');
+      } finally {
+        setIsAlbumsLoading(false);
+      }
+    };
+    fetchAlbums();
+  }, []);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -313,6 +331,47 @@ const App: React.FC = () => {
     }
   };
 
+  const renderAlbumSelect = () => {
+    if (isAlbumsLoading) {
+      return (
+        <div className="mb-6 flex items-center justify-center p-3 rounded-lg bg-zinc-800 text-zinc-400">
+          <Loader2 className="animate-spin w-5 h-5 mr-2" />
+          <span>Loading albums...</span>
+        </div>
+      );
+    }
+
+    if (albumsError) {
+      return (
+        <div className="mb-6 p-3 rounded-lg border border-red-500 bg-red-900 text-red-300 flex items-center gap-2">
+          <AlertCircle className="w-5 h-5" />
+          <span>{albumsError}</span>
+        </div>
+      );
+    }
+
+    if (albums.length === 0) {
+      return (
+        <div className="mb-6 p-3 rounded-lg border border-zinc-700 bg-zinc-800 text-zinc-400 flex items-center gap-2">
+          <AlertCircle className="w-5 h-5" />
+          <span>No albums found. You need to create an album first.</span>
+        </div>
+      );
+    }
+    
+    return (
+      <FormSelect
+        id="albumId"
+        label="Album (Optional)"
+        value={formData.albumId}
+        onChange={(e) => handleInputChange(e)}
+        options={albums}
+        error={validationErrors.albumId}
+        placeholder="Select an album"
+      />
+    );
+  };
+
   return (
     <div className="min-h-screen bg-zinc-950 p-4 md:p-8 font-sans antialiased text-zinc-200">
       <div className="max-w-3xl mx-auto bg-zinc-900 rounded-xl p-6 md:p-10 shadow-lg border border-zinc-800">
@@ -355,14 +414,7 @@ const App: React.FC = () => {
             error={validationErrors.title}
           />
           
-          <FormSelect
-            id="albumId"
-            label="Album (Optional)"
-            value={formData.albumId}
-            onChange={(e) => handleInputChange(e)}
-            options={filteredAlbums}
-            error={validationErrors.albumId}
-          />
+          {renderAlbumSelect()}
           
           <FormImageUpload
             id="song_cover_upload"
