@@ -14,7 +14,6 @@ export default function AlbumsScroller({ initialAlbums, initialNextPageUrl }: Al
   const [albums, setAlbums] = useState<Album[]>(initialAlbums);
   const [nextPageUrl, setNextPageUrl] = useState<string | null>(initialNextPageUrl);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
   const loader = useRef<HTMLDivElement | null>(null);
 
   const fetchMoreAlbums = useCallback(async () => {
@@ -30,7 +29,7 @@ export default function AlbumsScroller({ initialAlbums, initialNextPageUrl }: Al
       setAlbums((prevAlbums) => [...prevAlbums, ...data.results]);
       setNextPageUrl(data.next);
     } catch (err) {
-    //   setError(err.message);
+        console.log(err)
     } finally {
       setLoading(false);
     }
@@ -68,7 +67,7 @@ export default function AlbumsScroller({ initialAlbums, initialNextPageUrl }: Al
           />
         ))}
         {loading && <p>Loading more albums...</p>}
-        {error && <p>Error: {error}</p>}
+        
       </Scroller>
       <div ref={loader} style={{ height: "20px" }}></div>
     </>
