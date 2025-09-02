@@ -1,6 +1,6 @@
 "use client"; 
 
-import React, { useState } from 'react'; 
+import React, { Suspense, useState } from 'react'; 
 import { useForm, Controller } from 'react-hook-form';
 import type { FieldValues } from 'react-hook-form';
 
@@ -20,8 +20,8 @@ interface LoginFormInputs extends FieldValues {
   password: string;
 }
 
-export default function App() {
-    const searchParams = useSearchParams(); 
+ function App() {
+    const searchParams =  useSearchParams();   
     const router = useRouter();
   const [message, setMessage] = useState<string | null>(null); 
   const [showPassword, setShowPassword] = useState<boolean>(false); 
@@ -173,6 +173,13 @@ const {fetchData} = useUserState()
           {"Don't have an account? "}<a href="#" className="ml-1 text-blue-500 hover:underline">Sign Up</a>
         </CardFooter>
       </Card>
+     
     </div>
   );
+}
+
+export default function Page(){
+  return <Suspense fallback={<div>loading...</div>}>
+    <App/>
+  </Suspense>
 }

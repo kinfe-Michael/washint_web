@@ -1,20 +1,5 @@
 {
   "extends": "next/core-web-vitals",
-  "plugins": ["unused-imports"],
-  "rules": {
-    // Disable the default 'no-unused-vars' rule
-    "@typescript-eslint/no-unused-vars": "off",
+  "plugins": ["unused-imports"]
 
-    // Enable the autofixable rules from the plugin
-    "unused-imports/no-unused-imports": "error",
-    "unused-imports/no-unused-vars": [
-      "warn",
-      {
-        "vars": "all",
-        "varsIgnorePattern": "^_",
-        "args": "after-used",
-        "argsIgnorePattern": "^_"
-      }
-    ]
-  }
 }

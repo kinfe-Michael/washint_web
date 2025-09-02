@@ -13,8 +13,8 @@ export default async function Page() {
       throw new Error("Failed to fetch initial albums");
     }
     albumsData = await response.json();
-  } catch (err: any) {
-    error = err.message;
+  } catch (err) {
+    error = 'something went wrong!'
   }
 
   return (

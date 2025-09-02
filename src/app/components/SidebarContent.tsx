@@ -13,6 +13,7 @@ import {
   HiViewList
 } from "react-icons/hi";
 import CreatePlaylist from "./CreatePlaylist";
+import PlaylistsBar from "./PlaylistBar";
 function SidebarContent() {
   function SideBarButtons({
     children,
@@ -82,10 +83,7 @@ function SidebarContent() {
       <SideBarcard title="Playlist">
       <CreatePlaylist/>
 
-        <SideBarButtons routeTo={""}>
-          <HiViewList />
-          Sad soul
-        </SideBarButtons>
+       <PlaylistsBar/>
       </SideBarcard>
     </div>
   );

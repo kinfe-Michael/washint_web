@@ -1,7 +1,7 @@
 import PageWraper from "../components/PageWraper"
 import SettingButtons from "./components/SettingButtons"
 
-function page() {
+function Page() {
   return (
     <PageWraper>
         <h1 className="text-xl ml-4 font-bold">settings</h1>
@@ -10,4 +10,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

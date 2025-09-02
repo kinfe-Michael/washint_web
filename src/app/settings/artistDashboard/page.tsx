@@ -5,7 +5,7 @@ import { api } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import ArtistDashboard from "./components/Dashboard";
 
-function page() {
+function Page() {
   const [isArtist, setIsArtist] = useState(false);
   const [ShowBecomeArtist, setShowBecomeArtist] = useState(false);
   useEffect(() => {
@@ -42,4 +42,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

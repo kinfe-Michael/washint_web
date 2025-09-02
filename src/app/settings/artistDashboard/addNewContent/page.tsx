@@ -5,7 +5,7 @@ import AddSongForm from '../components/AddSong'
 import PageWraper from '@/app/components/PageWraper'
 import AlbumForm from '../../components/AddAlbum'
 
-function page() {
+function Page() {
     const [showAddSongForm,setShowAddSongForm] = useState(false)
   return (
     <PageWraper>
@@ -23,4 +23,4 @@ function page() {
   )
 }
 
-export default page
+export default Page
