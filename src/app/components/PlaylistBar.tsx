@@ -82,7 +82,7 @@ const PlaylistBar = () => {
       {hasMorePlaylists && (
         <div className="mt-2">
           <Link
-            href="/all-playlists" // Replace with the actual path to the page showing all playlists
+            href="/playlists" // Replace with the actual path to the page showing all playlists
             className="w-full block text-center px-3 py-2 text-sm font-medium text-white hover:text-gray-400 rounded-lg 
                transition-colors duration-200"
           >
