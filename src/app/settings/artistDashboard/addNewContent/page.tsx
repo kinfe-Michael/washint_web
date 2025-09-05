@@ -1,6 +1,6 @@
 "use client"
 import { useState } from 'react'
-import DashboardButton from '../components/DashboardButton'
+import DashboardButton from '../../../components/DashboardButton'
 import AddSongForm from '../components/AddSong'
 import PageWraper from '@/app/components/PageWraper'
 import AlbumForm from '../../components/AddAlbum'

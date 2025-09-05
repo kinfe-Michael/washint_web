@@ -56,3 +56,23 @@ export interface AlbumsApiResponse {
   previous: string | null;
   results: Album[];
 }
+
+export interface Playlist {
+  id: string;
+  title: string;
+  description: string;
+  is_public: boolean;
+  songs: Song[];
+  signed_cover_art_url: string | null;
+  owner: {
+    id: string;
+    username: string;
+    email: string;
+    profile: {
+      id: string;
+      username: string;
+      display_name: string | null;
+      profile_picture_url: string | null;
+    };
+  };
+}
