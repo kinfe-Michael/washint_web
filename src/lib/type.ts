@@ -76,3 +76,12 @@ export interface Playlist {
     };
   };
 }
+export interface PlaylistSong {
+  playlist: string;
+  song: string;
+  order: number;
+}
+
+export interface ErrorResponse {
+  detail?: string;
+}

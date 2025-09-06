@@ -4,6 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import Image from 'next/image';
 import React from 'react';
 import type {Song} from '../../lib/type'
+import DashboardButton from './DashboardButton';
+import AddSongToPlayList from '../song/components/AddSongToPlayList';
 interface MusicDetailCardProps {
   music: Song;
 }
@@ -35,6 +37,9 @@ export const MusicDetailCard: React.FC<MusicDetailCardProps> = ({ music }) => {
           <p><strong>Duration:</strong> {music.duration_seconds}</p>
           <p><strong>Released:</strong> {music.created_at}</p>
         </CardContent>
+      </div>
+      <div>
+        <AddSongToPlayList songId={music.id}/>
       </div>
     </Card>
   );
