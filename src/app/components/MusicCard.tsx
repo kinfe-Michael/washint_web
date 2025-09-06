@@ -10,9 +10,11 @@ import PageWraper from "./PageWraper";
 
 function MusicCard({song}:{song:Song}) {
   const loadTrack = useWashintPlayer((state)=> state.loadTrack)
+  const setPlaying = useWashintPlayer((state)=> state.setPlaying)
   const [hoverStyle,setHoverStyle] = useState("hidden")
   function handleClick(){
     loadTrack(song)
+    setPlaying(true)
   }
   if(!song) {
     return <PageWraper>

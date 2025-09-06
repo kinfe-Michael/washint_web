@@ -20,6 +20,7 @@ import {
 import { removeSongFromPlaylist } from "@/lib/helperfunc";
 import { DialogClose } from "@radix-ui/react-dialog";
 import LoadingState from "@/app/components/LoadingAlbum";
+import useWashintPlayer from "@/store/useWashintPlayer";
 
 const PlaceholderImage = "/yohana.jpg";
 
@@ -86,7 +87,8 @@ const MainComponent = () => {
   const [error, setError] = useState<string | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-
+  const loadTrack = useWashintPlayer(state=>state.loadTrack)
+  const setPlaying = useWashintPlayer(state=>state.setPlaying)
   const router = useRouter();
   const params = useParams();
   const searchParams = useSearchParams();
@@ -158,7 +160,7 @@ const MainComponent = () => {
 
   const firstSong = playlist.songs[0];
   const remainingSongs = playlist.songs.slice(1);
-
+ 
   return (
     <PageWraper>
       <div className="bg-black text-white min-h-screen lg:pt-12">
@@ -199,7 +201,10 @@ const MainComponent = () => {
           </div>
 
           {/* First Song and Controls */}
-          <div className="mt-8 bg-zinc-900 rounded-xl p-6 shadow-lg flex items-center gap-6">
+          <div onClick={()=>{
+            loadTrack(firstSong)
+            setPlaying(true)
+          }} className="mt-8 bg-zinc-900 rounded-xl p-6 shadow-lg flex items-center gap-6">
             <div className="relative w-20 h-20 rounded-md overflow-hidden flex-shrink-0">
               <Image
                 src={firstSong?.signed_cover_url || PlaceholderImage}
@@ -233,6 +238,11 @@ const MainComponent = () => {
                 remainingSongs.map((song, index) => (
                   <li
                     key={song.id}
+                    onClick={()=> {
+                      loadTrack(song)
+                      setPlaying(true)
+                      console.log(song)
+                    }}
                     className="flex items-center gap-4 bg-zinc-900 hover:bg-zinc-800 rounded-lg p-3 transition-colors"
                   >
                     <span className="text-zinc-500 font-semibold">
@@ -265,8 +275,6 @@ const MainComponent = () => {
                             </DialogDescription>
                           </DialogHeader>
                           <DialogClose asChild>
-
-                         
                           <DashboardButton
                             onClick={() => {
                               if (typeof playlistId == "string")

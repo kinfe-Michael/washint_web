@@ -68,7 +68,7 @@ const PlaylistBar = () => {
         {displayedPlaylists.map((playlist) => (
           <li key={playlist.id}>
             <Link
-              href={`/playlists/${playlist.id}`}
+              href={`/playlists/${playlist.id}?my_playlist=true`}
               className="group flex items-center w-full px-3 py-2 text-left rounded-lg transition-colors duration-200 
                text-white  hover:text-gray-400"
             >
@@ -82,7 +82,7 @@ const PlaylistBar = () => {
       {hasMorePlaylists && (
         <div className="mt-2">
           <Link
-            href="/playlists" // Replace with the actual path to the page showing all playlists
+            href="/playlists?my_playlist=true" // Replace with the actual path to the page showing all playlists
             className="w-full block text-center px-3 py-2 text-sm font-medium text-white hover:text-gray-400 rounded-lg 
                transition-colors duration-200"
           >
