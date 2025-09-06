@@ -46,7 +46,7 @@ export default function ArtistList({
     setHasMore(!!newArtistsData.next);
   };
 
-
+console.log(artists)
   return (
     <div>
       <h1>Artists</h1>

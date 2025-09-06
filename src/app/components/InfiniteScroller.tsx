@@ -16,7 +16,7 @@ export default function InfiniteScroller({ initialSongs, initialNextPageUrl }: I
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const loader = useRef<HTMLDivElement | null>(null);
-
+ console.log(songs)
   const fetchMoreSongs = useCallback(async () => {
     if (!nextPageUrl || loading) return;
 
