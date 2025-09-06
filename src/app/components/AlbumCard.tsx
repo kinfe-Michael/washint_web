@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Album } from "../../lib/type";
+import NavLink from "./CustomNavLink";
 
 interface AlbumCardProps {
   album: Album;
@@ -9,7 +10,7 @@ interface AlbumCardProps {
 
 export default function AlbumCard({ album }: AlbumCardProps) {
   return (
-    <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 cursor-pointer">
+    <NavLink href={`/albums/${album.id}`} className="bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 cursor-pointer">
       <div className="relative  w-32 h-32 md:w-48 md:h-48">
         <Image
           src={album.signed_cover_art_url}
@@ -26,6 +27,6 @@ export default function AlbumCard({ album }: AlbumCardProps) {
           by {album.artist.display_name}
         </p>
       </div>
-    </div>
+    </NavLink>
   );
 }
