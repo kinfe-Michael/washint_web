@@ -65,6 +65,10 @@ function SidebarContent() {
           <HiMusicNote />
           Song
         </SideBarButtons>
+         <SideBarButtons routeTo="/playlists">
+          <HiMusicNote />
+          Playlists
+        </SideBarButtons>
         <SideBarButtons routeTo="/settings">
           <CiSettings />
           Settings

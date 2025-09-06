@@ -15,7 +15,7 @@ import {
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
-import DashboardButton from './DashboardButton';
+import DashboardButton from '../../../components/DashboardButton';
 import SongRow from './SongRow';
 import Albems from './Albems';
 // Use a CSS variable for the primary color for easy reuse.
