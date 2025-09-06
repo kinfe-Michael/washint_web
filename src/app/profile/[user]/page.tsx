@@ -6,6 +6,7 @@ import Image from "next/image";
 import { HiBell } from "react-icons/hi";
 import { getUserProfile } from "./getuserProfile";
 import type { UserProfile } from "../../../lib/type";
+import ArtistSongsList from "@/app/components/ArtistSongList";
 interface PageProps {
   params: Promise<{ user: string }>; // For a single dynamic segment
   searchParams: Promise<{ type: string }>; // For a single dynamic segment
@@ -64,15 +65,9 @@ async function page({ params,searchParams }: PageProps) {
 
         <div></div>
       </div>
-      {/* <Scroller routeTo="" title="My songs">
-        <MusicCard
-          imageUrl="/yohana.jpg"
-          musicUrl=""
-          alt="yohana"
-          title="Yetalesh"
-          artist="Yohana"
-        />
-      </Scroller> */}
+      {
+        type === 'artist' && <ArtistSongsList artistId={user}/>
+      }
     </PageWraper>
   );
 }
