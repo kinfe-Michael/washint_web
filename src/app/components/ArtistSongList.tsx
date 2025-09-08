@@ -5,13 +5,6 @@ import axios from 'axios';
 import { Song, SongsApiResponse } from '@/lib/type';
 import useWashintPlayer from '@/store/useWashintPlayer';
 
-
-
-
-
-
-
-
 export default function ArtistSongsList({ artistId }: { artistId: string }) {
     
     const  loadTrack  = useWashintPlayer(state=>state.loadTrack);

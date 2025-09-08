@@ -7,6 +7,7 @@ import { HiBell } from "react-icons/hi";
 import { getUserProfile } from "./getuserProfile";
 import type { UserProfile } from "../../../lib/type";
 import ArtistSongsList from "@/app/components/ArtistSongList";
+import NavLink from "@/app/components/CustomNavLink";
 interface PageProps {
   params: Promise<{ user: string }>; // For a single dynamic segment
   searchParams: Promise<{ type: string }>; // For a single dynamic segment
@@ -39,7 +40,7 @@ async function page({ params,searchParams }: PageProps) {
             />
             <div className="flex gap-1">
               {user != 'my-profile' && <Button>Follow</Button>}
-              {user == 'my-profile' && <Button>Edit Profile</Button>}
+              {user == 'my-profile' && <NavLink href={'/profile/edit'}>Edit Profile</NavLink>}
              {user != 'my-profile' && <Button>
                 <HiBell />
               </Button>}
