@@ -9,6 +9,8 @@ const cookieStore = await cookies()
    if(type === 'artist'){
     const response = await axios.get(`http://127.0.0.1:8000/api/public-artists/${user}`)
     console.log(response.data)
+    console.log(response.data)
+    console.log(response.data)
     return {profile:response.data.managed_by.profile}
   }
 

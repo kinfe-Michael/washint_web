@@ -5,13 +5,6 @@ import axios from 'axios';
 import { Song, SongsApiResponse } from '@/lib/type';
 import useWashintPlayer from '@/store/useWashintPlayer';
 
-
-
-
-
-
-
-
 export default function ArtistSongsList({ artistId }: { artistId: string }) {
     
     const  loadTrack  = useWashintPlayer(state=>state.loadTrack);
@@ -67,7 +60,7 @@ export default function ArtistSongsList({ artistId }: { artistId: string }) {
     if (songs.length === 0) {
         return (
             <div className="container mx-auto p-4 text-center">
-                <h1 className="text-2xl font-bold mb-4">Artist Not Found or No Songs</h1>
+               
                 <p className="text-gray-500">There are no songs available for this artist.</p>
             </div>
         );

@@ -7,6 +7,9 @@ import { HiBell } from "react-icons/hi";
 import { getUserProfile } from "./getuserProfile";
 import type { UserProfile } from "../../../lib/type";
 import ArtistSongsList from "@/app/components/ArtistSongList";
+import NavLink from "@/app/components/CustomNavLink";
+import { checkIsFollowing, followUser, unfollowUser } from "@/lib/helperfunc";
+import Following from "../Following";
 interface PageProps {
   params: Promise<{ user: string }>; // For a single dynamic segment
   searchParams: Promise<{ type: string }>; // For a single dynamic segment
@@ -23,10 +26,11 @@ async function page({ params,searchParams }: PageProps) {
   if (!profile) {
     return <div className="text-black">Loading</div>;
   }
+  console.log(profile)
   return (
     <PageWraper>
       <div className="mb-10">
-        <div className="flex flex-col md:flex-row items-center  lg:p-10 gap-4">
+        <div className="flex flex-col md:flex-row justify-center items-center  lg:p-10 gap-4">
           <div className="flex min-w-64 gap-2 flex-col items-center justify-center">
             <Image
               className="rounded-full w-64  md:w-48"
@@ -38,8 +42,8 @@ async function page({ params,searchParams }: PageProps) {
               height={300}
             />
             <div className="flex gap-1">
-              {user != 'my-profile' && <Button>Follow</Button>}
-              {user == 'my-profile' && <Button>Edit Profile</Button>}
+              {user != 'my-profile' && <Following profile={profile}/>}
+              {user == 'my-profile' && <NavLink href={'/profile/edit'}>Edit Profile</NavLink>}
              {user != 'my-profile' && <Button>
                 <HiBell />
               </Button>}
@@ -54,7 +58,7 @@ async function page({ params,searchParams }: PageProps) {
           </div>
 
           {profile.bio && profile.bio != '' && (
-            <div className="max-w-3xl  text-sm p-4">
+            <div className=" flex flex-col items-start  max-w-3xl w-full text-sm p-4">
               <h1 className="text-lg">Bio</h1>
               <p className="text-gray-400">
              {profile.bio}
