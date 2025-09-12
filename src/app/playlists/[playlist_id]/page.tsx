@@ -262,7 +262,7 @@ const MainComponent = () => {
                         {song.artist.display_name}
                       </p>
                     </div>
-                    <div>
+                    <div onClick={(e)=> e.stopPropagation()}>
                       <Dialog>
                         <DialogTrigger>
                           <HiTrash />

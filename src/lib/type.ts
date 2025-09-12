@@ -9,6 +9,7 @@ export type UserProfile = {
     following_count: number;
     created_at: string;
     updated_at: string;
+    userId:string;
   };
 
 
