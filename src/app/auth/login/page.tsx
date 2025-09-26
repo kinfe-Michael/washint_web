@@ -13,6 +13,7 @@ import { AiOutlineGoogle, AiOutlineLock, AiOutlineUser, AiOutlineEye, AiOutlineE
 import { handleLogin } from '@/lib/login';
 import { useRouter, useSearchParams } from 'next/navigation';
 import useUserState from '@/store/useUserState';
+import NavLink from '@/app/components/CustomNavLink';
 
 
 interface LoginFormInputs extends FieldValues {
@@ -42,8 +43,9 @@ const {fetchData} = useUserState()
    if(isLogedIn){
     setMessage(`Login successful`);
     if(redirectUrl){
-      router.push(redirectUrl)
       fetchData()
+      router.push(redirectUrl)
+      
     } else {
       history.back()
     }
@@ -55,7 +57,6 @@ const {fetchData} = useUserState()
   };
 
   const handleGoogleLogin = () => {
-    console.log('Logging in with Google...');
     setMessage('Redirecting to Google for login...');
   };
 
@@ -134,7 +135,7 @@ const {fetchData} = useUserState()
               )}
             </div>
             <div className='flex w-full justify-end p-0'>
-                 <a href="#" className="ml-1 text-xs self-end text-blue-500 hover:underline">Forgot password?</a>
+                 <NavLink href="/auth/reset" className="ml-1 text-xs self-end text-blue-500 hover:underline">Forgot password?</NavLink>
 
             </div>
 
@@ -152,25 +153,11 @@ const {fetchData} = useUserState()
             </p>
           )}
 
-          <div className="relative flex items-center justify-center my-6">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-gray-700"></span>
-            </div>
-            <div className="relative z-10 px-4 bg-gray-900 text-gray-400 text-sm">
-              OR
-            </div>
-          </div>
-          <Button
-            variant="outline"
-            className="w-full flex items-center justify-center gap-2 bg-gray-800 border-gray-700 text-white hover:bg-gray-700 font-bold py-2 rounded-md transition-colors duration-200"
-            onClick={handleGoogleLogin}
-          >
-            <AiOutlineGoogle className="text-lg" />
-            Login with Google
-          </Button>
+         
+         
         </CardContent>
         <CardFooter className="flex justify-center text-sm text-gray-400">
-          {"Don't have an account? "}<a href="#" className="ml-1 text-blue-500 hover:underline">Sign Up</a>
+          {"Don't have an account? "}<NavLink href="/auth/signup" className="ml-1 text-blue-500 hover:underline">Sign Up</NavLink>
         </CardFooter>
       </Card>
      

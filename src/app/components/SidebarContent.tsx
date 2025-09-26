@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import NavLink from "./CustomNavLink";
@@ -10,11 +11,11 @@ import {
   HiMicrophone,
   HiMusicNote,
   HiSun,
-  HiViewList
 } from "react-icons/hi";
-import CreatePlaylist from "./CreatePlaylist";
 import PlaylistsBar from "./PlaylistBar";
-function SidebarContent() {
+import useUserState from "@/store/useUserState";
+function SidebarContent({SheetClose}:{SheetClose?:any}) {
+  const isLogedIn = useUserState(state=>state.isLogedIn)
   function SideBarButtons({
     children,
     routeTo,
@@ -22,6 +23,16 @@ function SidebarContent() {
     children: ReactNode;
     routeTo: string;
   }) {
+    if(SheetClose){
+      return(
+         <NavLink href={routeTo}>
+          <SheetClose asChild>
+        <Button  className="hover:text-gray-500">{children}</Button>
+
+          </SheetClose>
+      </NavLink>
+      )
+    }
     return (
       <NavLink href={routeTo}>
         <Button className="hover:text-gray-500">{children}</Button>
@@ -46,6 +57,8 @@ function SidebarContent() {
       </Card>
     );
   }
+
+
   return (
     <div className="flex text-sm flex-col gap-1">
       <SideBarcard title="Menu">
@@ -61,7 +74,7 @@ function SidebarContent() {
           <HiMicrophone />
           Artist
         </SideBarButtons>
-        <SideBarButtons routeTo="/songs">
+        <SideBarButtons routeTo="/">
           <HiMusicNote />
           Song
         </SideBarButtons>
@@ -75,7 +88,7 @@ function SidebarContent() {
         </SideBarButtons>
       </SideBarcard>
       <SideBarcard title="Library">
-        <SideBarButtons routeTo="/favorite">
+        <SideBarButtons routeTo="/favorites">
           <HiHeart className="text-red-600" />
           Favorite
         </SideBarButtons>
@@ -85,9 +98,13 @@ function SidebarContent() {
         </SideBarButtons>
       </SideBarcard>
       <SideBarcard title="Playlist">
-      <CreatePlaylist/>
-
+       
        <PlaylistsBar/>
+        {
+          !isLogedIn && <div>
+            <NavLink className="text-white hover:text-gray-400" href={'/auth/login'}>Login to see your playlists</NavLink>
+          </div>
+        }
       </SideBarcard>
     </div>
   );

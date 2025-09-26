@@ -4,14 +4,14 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { HiViewList } from 'react-icons/hi';
 import axios from 'axios';
+import { api } from '@/lib/utils';
+import useUserState from '@/store/useUserState';
 
-// Define the type for a single playlist object
 interface Playlist {
   id: string;
   title: string;
 }
 
-// Define the type for the API response
 interface PlaylistsResponse {
   count: number;
   results: Playlist[];
@@ -19,15 +19,13 @@ interface PlaylistsResponse {
 
 const PlaylistBar = () => {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-
+  const isLogedIn = useUserState(state=>state.isLogedIn)
   useEffect(() => {
     const fetchPlaylists = async () => {
       try {
-        const response = await axios.get<PlaylistsResponse>('http://localhost:8000/api/playlists/?my-playlist=true', {
-          withCredentials: true,
-        });
+        const response = await api.get<PlaylistsResponse>('/playlists/?my-playlist=true');
         setPlaylists(response.data.results);
       } catch (err) {
         if (axios.isAxiosError(err)) {
@@ -39,12 +37,16 @@ const PlaylistBar = () => {
         setLoading(false);
       }
     };
+    if(isLogedIn){
+      setLoading(true)
+       fetchPlaylists();
 
-    fetchPlaylists();
+    }
+   
   }, []);
 
-  const displayedPlaylists = playlists.slice(0, 2);
-  const hasMorePlaylists = playlists.length > 2;
+  const displayedPlaylists = playlists.slice(0, 4);
+  const hasMorePlaylists = playlists.length > 4;
 
   if (loading) {
     return (

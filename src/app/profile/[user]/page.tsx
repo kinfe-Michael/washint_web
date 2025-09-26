@@ -20,7 +20,6 @@ async function page({ params,searchParams }: PageProps) {
   
   const { profile,isNew }: {profile:UserProfile,isNew:boolean | undefined}= await getUserProfile(user,type);
   if(isNew){
-    console.log('new user alert')
   }
   const userType = "artist";
   if (!profile) {

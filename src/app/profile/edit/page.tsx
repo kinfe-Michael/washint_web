@@ -89,7 +89,6 @@ const EditProfilePage = () => {
         withCredentials: true,
       });
 
-      console.log("Profile updated successfully!");
       router.push(`/profile/${profileData.username}`);
     } catch (err) {
       if (axios.isAxiosError(err) && err.response) {

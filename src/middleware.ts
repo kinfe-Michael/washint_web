@@ -6,15 +6,13 @@ import * as jose from 'jose';
 const API_BASE_URL = 'http://localhost:8000';
 
 export async function middleware(request: NextRequest) {
-  const protectedRoutes = ['/profile/my-profile', '/settings'];
+  const protectedRoutes = ['/profile/my-profile', '/settings','/favorites','/recent'];
 
   const isProtectedRoute = protectedRoutes.includes(request.nextUrl.pathname);
 
   const accessToken = request.cookies.get('access_token');
   const refreshToken = request.cookies.get('refresh_token');
- console.log("request.cookies")
- console.log(accessToken)
- console.log("request.cookies")
+
   const response = NextResponse.next();
   
   response.headers.set('x-middleware-cache', 'no-cache');
@@ -57,14 +55,11 @@ export async function middleware(request: NextRequest) {
             path: '/',
             maxAge: 60 * 60 * 24 * 7, 
           });
-          console.log('Token refreshed successfully from /api/token/refresh/');
           return newResponse;
         } else {
-          console.error('Refresh token failed:', refreshResponse.statusText);
           return redirectToLogin(request);
         }
       } catch (error) {
-        console.error('Refresh token API call failed:', error);
         return redirectToLogin(request);
       }
     }
@@ -78,7 +73,6 @@ export async function middleware(request: NextRequest) {
       await jose.jwtVerify(accessToken.value, secret);
     } catch (error) {
       if (error instanceof jose.errors.JWTExpired) {
-        console.log('Access token expired. Attempting to refresh...');
         
         if (refreshToken) {
           try {
@@ -107,24 +101,19 @@ export async function middleware(request: NextRequest) {
                 path: '/',
                 maxAge: 60 * 60 * 24 * 7, 
               });
-              console.log('Token refreshed successfully!');
               return newResponse;
             } else {
-              console.error('Refresh token failed:', refreshResponse.statusText);
               return redirectToLogin(request);
             }
           } catch (refreshError) {
-            console.error('Refresh token API call failed:', refreshError);
             return redirectToLogin(request);
           }
         } else {
          
-          console.error('Access token expired and no refresh token available.');
           return redirectToLogin(request);
         }
       } else {
        
-        console.error('Invalid token:', error);
         return redirectToLogin(request);
       }
     }

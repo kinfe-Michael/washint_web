@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { ErrorResponse, PlaylistSong } from './type';
 import { api } from './utils';
+import useUserState from '@/store/useUserState';
 
 /**
  * Adds a song to a specific playlist using Axios.
@@ -16,7 +17,6 @@ export async function addSongToPlaylist(playlistId: string, songId: string): Pro
       `/playlists/${playlistId}/songs/add-song/`,
       { song_id: songId }
     );
-    console.log('Song added successfully:', response.data);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
@@ -32,7 +32,6 @@ export async function removeSongFromPlaylist(playlistId: string, songId: string)
     await api.delete(
       `/playlists/${playlistId}/songs/remove-song/${songId}/`
     );
-    console.log('Song removed successfully.');
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       const errorData = error.response.data as ErrorResponse;
@@ -53,7 +52,6 @@ export async function unfollowUser(followObjectId: string): Promise<void> {
             }
         });
 
-        console.log(`Successfully unfollowed user (Follow object ID: ${followObjectId})`);
     } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
             console.error('Unfollow request failed:', error.response.data);
@@ -131,3 +129,149 @@ export async function checkIsFollowing(targetUserId: string): Promise<boolean> {
         throw new Error('Failed to check follow status.');
     }
 }
+
+export async function logout() {
+    const response = await api.post('/logout/')
+    return response
+}
+
+
+// api/favorites.ts
+
+
+
+// Define the base URL of your Django API.
+// It's a good practice to use environment variables for this.
+
+/**
+ * Interface for the data to be sent in the request body.
+ * Assumes your backend expects a 'song' ID.
+ */
+interface AddFavoritePayload {
+  song_id: string; // The UUID of the song
+}
+
+/**
+ * Interface for a successful response.
+ * Adjust this based on what your Django API returns on success.
+ */
+interface AddFavoriteResponse {
+  id: string;
+  user: string;
+  song: string;
+  added_at: string;
+}
+
+/**
+ * Adds a song to the user's favorites.
+ * @param songId The UUID of the song to favorite.
+ * @param token The user's authentication token (e.g., JWT).
+ * @returns A promise that resolves with the favorite object on success.
+ */
+export const addSongToFavorites = async (
+  songId: string,
+  
+): Promise<AddFavoriteResponse> => {
+
+  const payload: AddFavoritePayload = {
+    song_id: songId,
+  };
+  console.log(songId)
+  console.log(songId)
+  console.log(songId)
+  console.log(songId)
+  console.log(songId)
+
+  try {
+    const response = await api.post<AddFavoriteResponse>(
+      `/favorites/`,
+      payload,
+    );
+
+    return response.data;
+  } catch (error) {
+    // Handle specific Axios errors or re-throw
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error('API Error:', error.response.data);
+        throw new Error(
+          `Failed to add song to favorites: ${JSON.stringify(error.response.data)}`
+        );
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('Network Error:', error.request);
+        throw new Error('Network error. Please check your connection.');
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error:', error.message);
+        throw new Error(`Request setup error: ${error.message}`);
+      }
+    }
+    console.error('Unexpected error:', error);
+    throw new Error('An unexpected error occurred.');
+  }
+};
+
+
+
+
+/**
+ * Interface for the data to be sent in the request body.
+ */
+interface AddRecentlyPlayedPayload {
+  song: string; // The UUID of the song
+}
+
+/**
+ * Interface for the successful response from the server.
+ */
+interface RecentlyPlayedResponse {
+  id: string;
+  user: string;
+  song: {
+    id: string;
+    title: string;
+    artist: string; // Or a more detailed artist object
+  };
+  played_at: string;
+}
+
+/**
+ * Adds or updates a song in the user's recently played list.
+ * @param songId The UUID of the song to add.
+ * @param token The user's authentication token.
+ * @returns A promise that resolves with the updated recently played object.
+ */
+export const addSongToRecentlyPlayed = async (
+  songId: string,
+ 
+): Promise<RecentlyPlayedResponse> => {
+ 
+
+  const payload: AddRecentlyPlayedPayload = {
+    song: songId,
+  };
+
+  try {
+    const response = await api.post<RecentlyPlayedResponse>(
+      `/recently-played/`,
+      payload,
+    );
+    console.log(response)
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        console.error('API Error:', error.response.data);
+        throw new Error(
+          `Failed to add song to recently played: ${JSON.stringify(error.response.data)}`
+        );
+      }
+    }
+    console.error('An unexpected error occurred:', error);
+    throw new Error('An unexpected error occurred.');
+  }
+};

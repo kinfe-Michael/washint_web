@@ -4,10 +4,12 @@ import { Home, Library, LucideIcon, Play, Search } from "lucide-react"; // Impor
 import React, { useState } from "react";
 import NavLink from "./CustomNavLink";
 import { useCustomRouter } from "@/hooks/useCustomRouter";
+import useWashintPlayer from "@/store/useWashintPlayer";
 
 export default function MobileNavbar() {
   const [activeLink, setActiveLink] = useState<string>("home");
   const router = useCustomRouter()
+  const currentTrack = useWashintPlayer(state=>state.currentTrack)
   return (
     <nav
       className="fixed bottom-0 left-0 w-full bg-gray-900 text-white p-2
@@ -30,7 +32,7 @@ export default function MobileNavbar() {
         icon={Library}
         label="Library"
         linkName="library"
-        routeTo={"/playlist"}
+        routeTo={"/playlists"}
         active={activeLink === "library"}
         onClick={() => {
           setActiveLink("library")
@@ -54,11 +56,11 @@ export default function MobileNavbar() {
         icon={Play}
         label="Playing"
         linkName="playing"
-        routeTo={"/song"}
+        routeTo={`/song/${currentTrack?.title}`}
         active={activeLink === "playing"}
         onClick={() => {
           setActiveLink("playing")
-          router.push("/playing")
+          
         }}
       />
     </nav>

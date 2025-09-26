@@ -10,11 +10,7 @@ function ArtistCard({
   artistName: string;
   id: string;
 }) {
-  console.log(id);
-  console.log(id);
-  console.log(id);
-  console.log(id);
-  console.log(id);
+
   return (
     <NavLink
       href={`/profile/${id}?type=artist`}

@@ -64,7 +64,6 @@ export default function Player() {
 
     if (playing) {
       audio.play().catch((err) => {
-        console.error("Error playing audio:", err);
         setError(`Playback failed: ${err.message}`);
         setPlaying(false); // Ensure UI reflects paused state on error
       });
@@ -105,7 +104,6 @@ export default function Player() {
 
   // Callback for audio errors
   const handleAudioError = useCallback((event: React.SyntheticEvent<HTMLAudioElement, Event>) => {
-    console.error("HTML Audio Element Error:", event);
     const audio = mediaRef.current;
     let errorMessage = "An unknown audio error occurred.";
     if (audio && audio.error) {
@@ -148,7 +146,6 @@ export default function Player() {
         // If not playing, ensure it starts playing after seek
         if (!playing) {
           mediaRef.current.play().catch(err => {
-            console.error("Error playing after seek:", err);
             setError(`Playback failed after seek: ${err.message}`);
             setPlaying(false); // Ensure state reflects failure
           });
@@ -180,7 +177,6 @@ export default function Player() {
       audio.play().then(() => {
         setPlaying(true); // Update Zustand state only if play succeeds
       }).catch(err => {
-        console.error("Error playing audio:", err);
         setError(`Playback failed: ${err.message}`);
         setPlaying(false); // Ensure state reflects failure
       });
@@ -285,7 +281,8 @@ if(!currentTrack) return
             <Image
             layout="fill"
               className="rounded-lg object-cover w-full h-full"
-              src={currentTrack?.signed_cover_url || "https://placehold.co/64x64/FF3B30/FFFFFF?text=Music"} 
+              src={'/yohana.jpg'} 
+              // src={currentTrack?.signed_cover_url || "https://placehold.co/64x64/FF3B30/FFFFFF?text=Music"} 
               alt={currentTrack?.title || "Album Art"}
               onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
                 e.currentTarget.src = "https://placehold.co/64x64/FF3B30/FFFFFF?text=Music"; // Fallback image on error

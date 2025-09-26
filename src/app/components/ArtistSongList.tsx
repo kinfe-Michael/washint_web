@@ -28,7 +28,6 @@ export default function ArtistSongsList({ artistId }: { artistId: string }) {
                 const response = await axios.get<SongsApiResponse>(`${API_BASE_URL}/artists/${artistId}/songs/`);
                 setSongs(response.data.results);
             } catch (err) {
-                console.error('Failed to fetch artist songs:', err);
                 setError('Error loading songs. Please check the artist ID.');
                 setSongs([]);
             } finally {

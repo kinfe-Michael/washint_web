@@ -7,6 +7,7 @@ import NavLink from "./CustomNavLink";
 import { FaPlay } from "react-icons/fa";
 import type { Song } from "@/lib/type";
 import PageWraper from "./PageWraper";
+export const revalidate = 60;
 
 function MusicCard({song}:{song:Song}) {
   const loadTrack = useWashintPlayer((state)=> state.loadTrack)
