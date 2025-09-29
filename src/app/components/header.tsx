@@ -13,12 +13,15 @@ import useUserState from "@/store/useUserState";
 function Header() {
   const [searchTerm, setSearchTerm] = useState<string>(""); 
   const searchInputRef = useRef<HTMLInputElement>(null); 
+  const [loadCount,setLoadCount] = useState(0)
   const searchContainerRef = useRef<HTMLDivElement>(null); 
   const isSearchBarActive = useWashintStore((state)=> state.isSearchBarOpen)
     const {fetchData,data,isLogedIn} = useUserState()
   useEffect(()=>{
     fetchData()
-  },[])
+    setLoadCount(pre => pre++)
+    console.log(loadCount)
+  },[isLogedIn])
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) { 
       if (
