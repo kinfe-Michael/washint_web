@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineGoogle, AiOutlineLock, AiOutlineMail, AiOutlineUser } from 'react-icons/ai';
+import NavLink from '@/app/components/CustomNavLink';
 
 // Update the interface to include first and last name
 interface SignupFormInputs extends FieldValues {
@@ -68,7 +69,6 @@ export default function App() {
             setUsernameAvailability(false);
           }
         } catch (error) {
-          console.error('Error checking username:', error);
           setUsernameMessage({ text: 'Could not check username. Please try again. (CORS error likely)', color: 'text-yellow-500' });
           setUsernameAvailability(null);
         } finally {
@@ -103,14 +103,12 @@ export default function App() {
 
         if (response.ok) {
           const responseData = await response.json();
-          console.log('Signup successful:', responseData);
           setMessage(`User created successfully! Welcome, ${data.first_name}.`);
           // Clear all fields on successful submission
           reset();
         } else {
           // Handle API errors from the server
           const errorData = await response.json();
-          console.error('Signup failed:', errorData);
           setMessage(`Error: ${errorData.message || 'Signup failed. Please try again.'}`);
           // Clear only the password field on failure
           reset({
@@ -119,7 +117,6 @@ export default function App() {
           });
         }
       } catch (error) {
-        console.error('Network error during signup:', error);
         setMessage('A network error occurred. Please check your connection and try again.');
         // Clear only the password field on network error
         reset({
@@ -135,7 +132,6 @@ export default function App() {
   };
 
   const handleGoogleSignup = () => {
-    console.log('Signing up with Google...');
     setMessage('Redirecting to Google for signup...');
   };
 
@@ -327,25 +323,11 @@ export default function App() {
             </p>
           )}
 
-          <div className="relative flex items-center justify-center my-6">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t border-gray-700"></span>
-            </div>
-            <div className="relative z-10 px-4 bg-gray-900 text-gray-400 text-sm">
-              OR
-            </div>
-          </div>
-          <Button
-            variant="outline"
-            className="w-full flex items-center justify-center gap-2 bg-gray-800 border-gray-700 text-white hover:bg-gray-700 font-bold py-2 rounded-md transition-colors duration-200"
-            onClick={handleGoogleSignup}
-          >
-            <AiOutlineGoogle className="text-lg" />
-            Sign Up with Google
-          </Button>
+        
+         
         </CardContent>
         <CardFooter className="flex justify-center text-sm text-gray-400">
-          Already have an account? <a href="#" className="ml-1 text-blue-500 hover:underline">Log In</a>
+          Already have an account? <NavLink href="/auth/login" className="ml-1 text-blue-500 hover:underline">Log In</NavLink>
         </CardFooter>
       </Card>
     </div>

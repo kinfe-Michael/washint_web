@@ -15,7 +15,7 @@ function Header() {
   const searchInputRef = useRef<HTMLInputElement>(null); 
   const searchContainerRef = useRef<HTMLDivElement>(null); 
   const isSearchBarActive = useWashintStore((state)=> state.isSearchBarOpen)
-    const {fetchData,data} = useUserState()
+    const {fetchData,data,isLogedIn} = useUserState()
   useEffect(()=>{
     fetchData()
   },[])
@@ -27,7 +27,6 @@ function Header() {
         searchInputRef.current &&
         !searchInputRef.current.contains(event.target as Node)
       ) {
-        // setShowSearchResults(false);
         closeSearchBar()
       }
     }
@@ -39,13 +38,11 @@ function Header() {
   }, []);
 
   const handleFocus = () => { 
-    // setShowSearchResults(true);
     openSearchBar()
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => { 
     setSearchTerm(event.target.value);
-    // setShowSearchResults(true);
     openSearchBar()
   };
 
@@ -83,7 +80,7 @@ function Header() {
         )}
       </div>
       <div className="flex flex-grow items-center justify-end gap-2">
-      { data.username === '' && 
+      { !isLogedIn && 
      ( <><NavLink href={"/auth/login"}>
           <Button className="px-2 text-xs hidden md:block font-bold">Login</Button>
 
@@ -94,7 +91,7 @@ function Header() {
           </NavLink></> ) 
       }
       {
-        data.username != '' && <div>
+        isLogedIn && data.username != '' && <div>
           <NavLink className=" hover:bg-gray-800 rounded-full text-3xl flex items-center" href={'/profile/my-profile'}>
           <HiUser className="  rounded-full "/>
           </NavLink>

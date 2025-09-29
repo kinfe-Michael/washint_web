@@ -1,4 +1,4 @@
-// app/artists/page.tsx
+export const dynamic = 'force-dynamic';
 
 import PageWraper from '../components/PageWraper';
 import { getArtists } from './action';

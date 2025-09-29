@@ -66,13 +66,11 @@ export function SearchResultsOverlay({ searchTerm, onClose,setSearchTerm }: Sear
       setResults(response.data);
     } catch (err) {
       setError("Failed to fetch search results. Please check your Django server and URL.");
-      console.error(err);
     } finally {
       setLoading(false);
     }
   };
   useEffect(()=>{
-    console.log(results)
   },[results])
 
 

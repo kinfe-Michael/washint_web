@@ -5,6 +5,7 @@ import { persist } from "zustand/middleware";
 
 interface UserState {
   loading: boolean;
+  isLogedIn:boolean;
   error: string | null;
   data: {
     bio: string;
@@ -18,13 +19,14 @@ interface UserState {
     username: string;
   };
   fetchData: () => Promise<void>;
+  resetData: ()=> void;
 }
 
-// Add the type parameter to the create function
 const useUserState = create<UserState>()(
   persist(
     (set) => ({
       loading: false,
+      isLogedIn:false,
       error: null,
       data: {
         bio: "",
@@ -38,12 +40,12 @@ const useUserState = create<UserState>()(
         username: "",
       },
       fetchData: async () => {
-        set({ loading: true, error: null });
+        set({ loading: true, error: null,isLogedIn:false });
         try {
           const response = await api.get("/profiles/my-profile/");
           const data = response.data;
           set({ data: data });
-          set({ loading: false, error: null });
+          set({ loading: false, error: null,isLogedIn:true });
         } catch (error) {
           if (axios.isAxiosError(error)) {
             const axiosError = error as AxiosError;
@@ -52,6 +54,7 @@ const useUserState = create<UserState>()(
                 axiosError.response?.statusText || axiosError.message
               }`,
               loading: false,
+              isLogedIn:false,
             });
           } else {
             const errorMessage =
@@ -60,11 +63,28 @@ const useUserState = create<UserState>()(
           }
         }
       },
+      resetData: ()=>{
+        set({
+          loading: false,
+      isLogedIn:false,
+      error: null,
+      data: {
+        bio: "",
+        created_at: "",
+        display_name: "",
+        follower_count: 0,
+        following_count: 0,
+        id: "",
+        profile_picture_url: null,
+        updated_at: "",
+        username: "",
+      }
+        })
+      }
     }),
     {
       name: "user-profile-storage",
-      // You can also add `partialize` here to control which parts of the state get persisted
-      // partialize: (state) => ({ data: state.data }),
+    
     }
   )
 );

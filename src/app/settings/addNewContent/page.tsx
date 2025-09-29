@@ -1,12 +1,12 @@
 "use client"
 import { useState } from 'react'
-import DashboardButton from '../../../components/DashboardButton'
-import AddSongForm from '../components/AddSong'
 import PageWraper from '@/app/components/PageWraper'
-import AlbumForm from '../../components/AddAlbum'
+import AlbumForm from '../components/AddAlbum'
+import AddSongForm from '../components/AddSong'
 
 function Page() {
     const [showAddSongForm,setShowAddSongForm] = useState(false)
+    
   return (
     <PageWraper>
     

@@ -1,8 +1,11 @@
+export const dynamic = 'force-dynamic';
+
+
 import PageWraper from "../components/PageWraper";
 import AlbumsScroller from "./AlbumScroller";
 import { AlbumsApiResponse } from "../../lib/type";
 
-// This is a Server Component, so it can be an async function.
+
 export default async function Page() {
   let albumsData: AlbumsApiResponse | null = null;
   let error: string | null = null;

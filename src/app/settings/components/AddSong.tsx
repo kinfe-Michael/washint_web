@@ -173,7 +173,7 @@ const FormImageUpload: React.FC<FormImageUploadProps> = ({ id, label, file, onCh
 };
 
 
-const App: React.FC = () => {
+const AddSongForm: React.FC = () => {
   const [formData, setFormData] = useState<SongFormData>({
     title: '',
     albumId: '',
@@ -533,4 +533,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default AddSongForm;

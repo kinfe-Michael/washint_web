@@ -1,6 +1,9 @@
+export const dynamic = 'force-dynamic';
+
 import PageWraper from "../components/PageWraper";
 import InfiniteScroller from "../components/InfiniteScroller";
 import { SongsApiResponse } from "../../lib/type";
+import { api } from "@/lib/utils";
 
 // This is a Server Component, so no "use client" directive here.
 // It can be an async function to fetch data directly.
@@ -9,11 +12,9 @@ export default async function Page() {
   let error: string | null = null;
 
   try {
-    const response = await fetch("http://localhost:8000/api/songs/");
-    if (!response.ok) {
-      throw new Error("Failed to fetch initial songs");
-    }
-    songsData = await response.json();
+    const response = await api.get("http://localhost:8000/api/songs/");
+    
+    songsData = await response.data;
   } catch (err: any) {
     error = err.message;
   }

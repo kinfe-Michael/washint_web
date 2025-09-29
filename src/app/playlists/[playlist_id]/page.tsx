@@ -21,6 +21,7 @@ import { removeSongFromPlaylist } from "@/lib/helperfunc";
 import { DialogClose } from "@radix-ui/react-dialog";
 import LoadingState from "@/app/components/LoadingAlbum";
 import useWashintPlayer from "@/store/useWashintPlayer";
+import { api } from "@/lib/utils";
 
 const PlaceholderImage = "/yohana.jpg";
 
@@ -106,12 +107,8 @@ const MainComponent = () => {
     const fetchPlaylist = async () => {
       try {
         setLoading(true);
-        const response = await axios.get<Playlist>(
-          `http://localhost:8000/api/playlists/${playlistId}/`,
-          {
-            withCredentials: true,
-          }
-        );
+        const response = await api.get<Playlist>(`/playlists/${playlistId}/`)
+        
         setPlaylist(response.data);
       } catch (err) {
         if (axios.isAxiosError(err)) {
@@ -132,9 +129,7 @@ const MainComponent = () => {
   const handleDeletePlaylist = async () => {
     setIsDeleting(true);
     try {
-      await axios.delete(`http://localhost:8000/api/playlists/${playlistId}/`, {
-        withCredentials: true,
-      });
+      await api.delete(`/playlists/${playlistId}/`);
       router.push("/playlists?my_playlist=true");
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -241,7 +236,6 @@ const MainComponent = () => {
                     onClick={()=> {
                       loadTrack(song)
                       setPlaying(true)
-                      console.log(song)
                     }}
                     className="flex items-center gap-4 bg-zinc-900 hover:bg-zinc-800 rounded-lg p-3 transition-colors"
                   >

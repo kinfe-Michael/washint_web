@@ -29,7 +29,6 @@ export default function AlbumsScroller({ initialAlbums, initialNextPageUrl }: Al
       setAlbums((prevAlbums) => [...prevAlbums, ...data.results]);
       setNextPageUrl(data.next);
     } catch (err) {
-        console.log(err)
     } finally {
       setLoading(false);
     }

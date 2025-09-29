@@ -1,21 +1,19 @@
  'use server'
-import axios from "axios"
+import { api } from "@/lib/utils"
  import { cookies } from "next/headers"
 export async function getUserProfile(user:string,type:string){
 const cookieStore = await cookies()
  
-  console.log(user)
 
    if(type === 'artist'){
-    const response = await axios.get(`http://127.0.0.1:8000/api/public-artists/${user}`)
-    console.log(response.data)
-    console.log(response.data)
-    console.log(response.data)
+    const response = await api.get(`/public-artists/${user}`,{
+      withCredentials:false,
+    })
     return {profile:response.data.managed_by.profile}
   }
 
   if(user === 'my-profile'){
-  const response = await axios.get("http://localhost:8000/api/profiles/my-profile/",{
+  const response = await api.get("/profiles/my-profile/",{
     withCredentials:true,
     headers:{
       Cookie:cookieStore.toString()
@@ -24,7 +22,7 @@ const cookieStore = await cookies()
   return response.data
   }
   else {
-  const response = await axios.get(`http://localhost:8000/api/profiles/user_profile/?username=${user}`,{
+  const response = await api.get(`/profiles/user_profile/?username=${user}`,{
     withCredentials:true,
     headers:{
       Cookie:cookieStore.toString()

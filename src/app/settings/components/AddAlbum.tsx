@@ -103,7 +103,6 @@ const AlbumForm: React.FC = () => {
         withCredentials: true,
       });
 
-      console.log('Album added successfully:', response.data);
       setSubmitStatus('success');
       setFormData({
         title: '',

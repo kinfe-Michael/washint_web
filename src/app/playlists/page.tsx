@@ -312,7 +312,6 @@ function AllPlaylistsPage (){
   const handlePlayButtonClick = (event: React.MouseEvent, playlistId: string) => {
     event.preventDefault(); 
     event.stopPropagation();
-    console.log(`Play button clicked for playlist with ID: ${playlistId}`);
   };
 
   if (error) {

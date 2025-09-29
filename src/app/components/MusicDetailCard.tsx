@@ -6,6 +6,7 @@ import React from 'react';
 import type {Song} from '../../lib/type'
 import DashboardButton from './DashboardButton';
 import AddSongToPlayList from '../song/components/AddSongToPlayList';
+import Fevorite from './Fevorite';
 interface MusicDetailCardProps {
   music: Song;
 }
@@ -37,6 +38,7 @@ export const MusicDetailCard: React.FC<MusicDetailCardProps> = ({ music }) => {
           <p><strong>Duration:</strong> {music.duration_seconds}</p>
           <p><strong>Released:</strong> {music.created_at}</p>
         </CardContent>
+        <Fevorite songId={music.id}/>
       </div>
       <div>
         <AddSongToPlayList songId={music.id}/>

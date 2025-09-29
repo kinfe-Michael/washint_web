@@ -15,7 +15,7 @@ export default function ArtistList({
   const [offset, setOffset] = useState(initialArtists.results.length);
   const [hasMore, setHasMore] = useState(!!initialArtists.next);
   const loadingRef = useRef(null);
-
+  
   useEffect(() => {
     if (!hasMore) return;
 
@@ -46,7 +46,6 @@ export default function ArtistList({
     setHasMore(!!newArtistsData.next);
   };
 
-console.log(artists)
   return (
     <div>
       <h1>Artists</h1>
