@@ -40,7 +40,7 @@ const useUserState = create<UserState>()(
         username: "",
       },
       fetchData: async () => {
-        set({ loading: true, error: null,isLogedIn:false });
+        set({ loading: true, error: null});
         try {
           const response = await api.get("/profiles/my-profile/");
           const data = response.data;

@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
  
-  /* config options here */
+  
   output: "standalone",
     images: {
     remotePatterns: [
@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'washint.s3.amazonaws.com',
         port: '',
-        pathname: '/media/images/**', // The `/**` allows for any sub-path
+        pathname: '/media/images/**',
       },
     ],
   },

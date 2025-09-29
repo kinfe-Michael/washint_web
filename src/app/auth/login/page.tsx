@@ -1,6 +1,6 @@
 "use client"; 
 
-import React, { Suspense, useState } from 'react'; 
+import React, { Suspense, useEffect, useState } from 'react'; 
 import { useForm, Controller } from 'react-hook-form';
 import type { FieldValues } from 'react-hook-form';
 
@@ -35,6 +35,9 @@ const {fetchData} = useUserState()
       password: '',
     },
   });
+  useEffect(()=>{
+    fetchData()
+  },[message])
 
 
   const onSubmit = async (data: LoginFormInputs) => {
@@ -43,7 +46,7 @@ const {fetchData} = useUserState()
    if(isLogedIn){
     setMessage(`Login successful`);
     if(redirectUrl){
-      fetchData()
+      
       router.push(redirectUrl)
       
     } else {
